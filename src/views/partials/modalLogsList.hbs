@@ -1,0 +1,179 @@
+<!-- [Correlation id modal partial (modalLogsList.hbs)] -->
+
+<div id="correlationIdListModal" class="modal" onclick="return modalClose(event)">
+
+  <!-- The modal box outline and content  -->
+  <div id="correlationIdListModalContent" class="modal-content box-shadow">
+
+    <!-- Shows instructional title for list, info text and close button -->
+    <div class="modal-top-div">
+
+      <!-- the title for modal, and some additional info text -->
+      <div class="modal-title-and-info">
+        <div class="modal-title">Valitse ID listasta ja aloita haku</div>
+        <div id="lastSearchedInfoText" class="modal-info-text"></div>
+      </div>
+
+      <!-- button for closing modal, works the same way as clicking outside modal  -->
+      <div class="modal-top-div-buttons">
+        <button id="closeModalButton"
+          class="material-icons close-button modal-function-button small icon-only alternate-blue"
+          title="Sulje lista ilman hakua" onclick="return modalClose(event)">close</button>
+      </div>
+
+    </div>
+
+    <!-- All buttons for filtering correlation id list  -->
+    <div id="filteringButtons" class="list-filtering-buttons">
+
+      <!-- button toggles showing specific catalogers or hiding them from the list -->
+      <!-- segmented button used as multi-select button -->
+      <div id="catalogerToggleContainer" class="segmented-button-container select-button-container"></div>
+
+      <!-- button toggles showing logs by log type or hiding them from the list -->
+      <!-- segmented button used as multi-select button -->
+      <div id="logTypeToggleContainer" class="segmented-button-container select-button-container"></div>
+
+      <!-- button toggles showing only correlation ids with logs with creation time today or over week ago -->
+      <!-- segmented button used as single-select button -->
+      <div id="logCreationDateToggleContainer" class="segmented-button-container select-button-container">
+
+        <button id="creationTimeToday" class="select-button segmented-button"
+          data-title-a="Näytä vain tänään luodut ID:t listanäkymässä" data-title-b="Nollaa kaikki päivämääräsuodattimet"
+          onclick="return toggleShowLogsByCreationDate(`today`)" data-value="false">
+          <div class="select-button-content">
+            <span class="material-icons select-button-icon">check</span>
+            <span class="select-button-text">Tänään</span>
+          </div>
+        </button>
+
+        <button id="creationTimeWeekAgo" class="select-button segmented-button"
+          data-title-a="Näytä vain yli viikko sitten luodut ID:t listanäkymässä"
+          data-title-b="Nollaa kaikki päivämääräsuodattimet" onclick="return toggleShowLogsByCreationDate(`weekAgo`)"
+          data-value="false">
+          <div class="select-button-content">
+            <span class="material-icons select-button-icon">check</span>
+            <span class="select-button-text">Yli viikko sitten</span>
+          </div>
+        </button>
+
+      </div>
+
+      <!-- button toggles showing extra details for correlation id list items or hiding them  -->
+      <!-- single-select button -->
+      <div id="listDetailsToggleContainer" class="select-button-container">
+        <button id="toggleListDetails" class="select-button select-button-selected"
+          data-title-a="Piilota tarkat tiedot listanäkymästä" data-title-b="Näytä tarkat tiedot listanäkymässä"
+          onclick="return toggleListDetails(event)" data-value="true">
+          <div class="select-button-content">
+            <span class="material-icons select-button-icon">check</span>
+            <span class="select-button-text">Tarkat tiedot</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- This is helper html for filtering buttons  -->
+      <!-- template's contents are not rendered on page -->
+      <template id="buttonTemplate">
+
+        <!-- base for one select button-->
+        <!-- select button has a container that holds the button element  -->
+        <button id="segmentedSelectButton" class="select-button segmented-button select-button-selected" data-title-a=""
+          data-title-b="" data-value="true">
+          <div class="select-button-content">
+            <span class="material-icons select-button-icon">check</span>
+            <span class="select-button-text"></span>
+          </div>
+        </button>
+
+      </template>
+
+    </div>
+
+    <!-- All inputs for filtering correlation id list  -->
+    <div id="filteringInputs" class="list-filtering-inputs">
+
+      <!-- inputs for star date and end end date date pickers  -->
+      <div class="date-filter-container">
+        Päivämäärähaku:
+        <div class="datepicker-container">
+          <input id="dateStartInput" type="text" class="datepicker-input" onfocus="(this.type='date')"
+            placeholder="Start date"
+            title="Näytä listanäkymässä vain ID:t, joiden luontiaika on valitsemiesi päivämäärien välillä"
+            onchange="return updateOnChange(event)">
+          <input id="dateEndInput" type="text" class="datepicker-input" onfocus="(this.type='date')"
+            placeholder="End date"
+            title="Näytä listanäkymässä vain ID:t, joiden luontiaika on valitsemiesi päivämäärien välillä"
+            onchange="return updateOnChange(event)">
+        </div>
+      </div>
+
+      <!-- input for searching with correlation id string -->
+      <div class="correlation-id-filter-container">
+        Tekstihaku:
+        <input id="correlationIdInput" type="text" class="correlation-id-input"
+          title="Näytä listanäkymässä vain ID:t, jotka sopivat hakutermiisi" placeholder="...0a1b-23cd45ef..."
+          oninput="return updateOnChange(event)">
+      </div>
+
+    </div>
+
+    <!-- Div for search results info and sorting options -->
+    <div id="searchResultsAndSorting" class="list-search-results-and-sorting">
+
+      <!-- shows info about search results -->
+      <div id="fetchListPlaceholderText" class="search-results-placeholder">Haetaan listaa, hetkinen...</div>
+
+      <!-- button for resetting search and clearing all filters -->
+      <div id="clearFilters" class="clear-filters">
+        <button id="clearFiltersButton" class="clear-filter-button modal-function-button alternate-red"
+          title="Poista kaikki listanäkymän suodatukset" onclick="return clearFilters(event)">Nollaa
+          suodattimet</button>
+      </div>
+
+      <!-- shows the dropdown for sorting -->
+      <div class="select flex-column list-sorting">
+        <select id="correlationIdListSorting" class="sort-dropdown" onchange="return updateOnChange(event)">
+          <option selected value="sortByTimeNewestFirst">Näytä uusimmat ID:t ensin</option>
+          <option value="sortByTimeOldestFirst">Näytä vanhimmat ID:t ensin</option>
+          <option value="sortById">Järjestä ID:n mukaan (0->9 a->f)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Shows the list of correlation ids -->
+    <div id="correlationIdList" class="list-items"></div>
+
+    <!-- This is helper html for list items  -->
+    <!-- template's contents are not rendered on page -->
+    <template id="listItemTemplate">
+
+      <!-- base for one correlation id list item -->
+      <!-- one list item has id and details+icons -->
+      <div id="listItem" class="list-item">
+        <div class="list-item-id"></div>
+        <div class="list-item-details-and-icons">
+          <div class="list-item-details"></div>
+          <div class="list-item-icons">
+            <span class="material-icons list-item-icons-search" title="Tee haku tällä ID:llä">search</span>
+          </div>
+        </div>
+      </div>
+
+    </template>
+
+    <!-- Bottom div floating on top of modal contents ->
+            <!- button for scrolling back to the top of modal and screen -->
+    <div id="modalBottomDiv" class="modal-bottom-div">
+      <button id="scrollToTopButton" class="scroll-top-button modal-function-button alternate-blue"
+        title="Siirry takaisin listan alkuun" onclick="return goToTop(event)">Takaisin ylös</button>
+    </div>
+
+    <!-- Shows error message -->
+    <div id="errorFetchingListPlaceholder" class="error-message-placeholder" style="display: none">
+      <span class="material-icons error-message-icon">error_outline</span>
+      <span class="error-message-text"></span>
+    </div>
+
+  </div>
+</div>

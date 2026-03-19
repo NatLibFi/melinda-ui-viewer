@@ -1,0 +1,425 @@
+/* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+/* Correlation id list modal ---------------------------------------------------*/
+/* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+
+
+/* Modal content does not move sideways when scroll bar becomes visible or hidden */
+#correlationIdListModal {
+  overflow-y: scroll
+}
+
+/* Text content in correlation id modal is small */
+/* Modal starts vertically almost from top */
+/* width is guided to be more wide */
+#correlationIdListModal>.modal-content {
+  margin-top: 20px;
+  font-size: var(--font-size-content-small);
+  padding-top: 8px;
+  resize: horizontal;
+  overflow: auto;
+  max-width: 90%;
+  min-width: 39%;
+  min-height: 90%;
+}
+
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id modal title and top buttons*/
+/* ---------------------------------------------------------------------------- */
+
+/* Correlation id modal has top div */
+.modal-top-div {
+  display: flex;
+  padding-bottom: 0.5em;
+}
+
+/* Modal top div has place for modal title and info text*/
+.modal-title-and-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 8px;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-content-medium);
+}
+
+.modal-info-text {
+  display: flex;
+  color: var(--color-primary-black);
+  min-height: 14px;
+  padding-top: 0.5em;
+}
+
+/* Span part in info text is grey by default */
+.modal-info-text span {
+  font-family: var(--font-family-content);
+  padding-left: 0.5em;
+  color: grey;
+}
+
+/* Span part in info text is black and underlined when link is active */
+.modal-info-text.link-active span {
+  color: var(--color-primary-black);
+  text-decoration: underline;
+}
+
+/* Span part in info text shows style on hover */
+.modal-info-text.link-active span:hover {
+  cursor: pointer;
+  color: var(--color-functional-blue);
+}
+
+/* Modal top div has place for buttons */
+.modal-top-div-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-top: 5px;
+}
+
+.close-button {
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id modal has filtering options with select buttons and inputs */
+/* ---------------------------------------------------------------------------- */
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id list modal has filtering with buttons */
+.list-filtering-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  overflow: hidden;
+  min-width: 0;
+  min-height: 125px;
+  row-gap: 0.25em;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id list modal has filtering with inputs */
+.list-filtering-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5em;
+}
+
+/* Modal has two datepickers */
+.date-filter-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 0 0.5em 0.5em 0.5em;
+  padding-top: 0;
+
+}
+
+/* Container for one date picker input */
+.datepicker-container {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.datepicker-input {
+  max-width: 100px;
+  text-align: center;
+  margin-right: 0.5em;
+  padding-right: 0.5em;
+}
+
+/* Modal has correlation id filter */
+.correlation-id-filter-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  overflow: hidden;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+/* Using special correlation id font for inputs also */
+.correlation-id-input {
+  min-width: 275px;
+  max-width: 350px;
+  padding-left: 0.5em;
+  font-family: var(--font-family-mono);
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id search results and sorting in modal*/
+/* ---------------------------------------------------------------------------- */
+
+.list-search-results-and-sorting {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5em;
+}
+
+/* Container for search results */
+.search-results-placeholder {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding-left: 0.5em;
+  font-size: var(--font-size-content-medium);
+  align-items: center;
+}
+
+.styled-result {
+  font-weight: bold;
+  width: 45px;
+  text-align: right;
+}
+
+/* Container for clear filter button */
+.clear-filters {
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  align-items: center;
+  min-height: 60px;
+}
+
+.clear-filter-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Dropdown for sorting list */
+.list-sorting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-top: 0.5em;
+  padding-left: 0.5em;
+}
+
+.sort-dropdown {
+  visibility: hidden;
+  font-size: var(--font-size-content-small) !important;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id list items div*/
+/* ---------------------------------------------------------------------------- */
+
+/* The container for the correlation id list */
+.list-items {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* One list item*/
+
+/* A list item: correlation id, supporting text and trailing icons */
+.list-item {
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  border-bottom: solid 1px var(--color-grey-60);
+}
+
+/* The first list item has also border on top */
+.list-item:first-child {
+  border-top: solid 1px var(--color-grey-60);
+}
+
+/* A list item has style effect on mouse hovering */
+.list-item:hover {
+  background-color: var(--color-green-40) !important;
+  cursor: pointer;
+}
+
+/* A list item has style effect on clicking */
+.list-item:active {
+  color: white;
+  background-color: var(--color-green-100) !important;
+}
+
+/* Highlighting the last searched list item */
+.list-item.last-searched {
+  background-color: var(--color-green-80);
+  border-bottom: 5px solid grey;
+}
+
+/* A list item has headline: correlation id */
+.list-item-id {
+  display: flex;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 250px;
+  align-items: center;
+  padding: 0.5em;
+  margin-right: 0.5em;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-content-medium);
+}
+
+/* A list item has supporting text + trailing icons */
+.list-item-details-and-icons {
+  display: flex;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 3;
+}
+
+/* A list item's supporting text has log type, creation time and log count */
+.list-item-details {
+  display: flex;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 2;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0.5em;
+  color: grey;
+  font-size: var(--font-size-content-small);
+}
+
+/* A list item has trailing icons such as info icons */
+.list-item-icons {
+  display: flex;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 2;
+  min-width: 75px;
+  margin-left: 1em;
+  margin-right: 1em;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.list-item-icons span {
+  padding-left: 0.5em;
+}
+
+.list-item-icons span:not(.list-item-icons-search) {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* A list item has search icon for hint */
+
+/* search icon is not displayed by default*/
+.list-item-icons-search {
+  display: none !important;
+}
+
+/* search icon is displayed when it's row is hovered */
+.list-item:hover .list-item-icons-search {
+  display: flex !important;
+}
+
+/* the check icon of previously searched list item is hidden when hovering */
+.list-item:hover .list-item-icons span.selected-list-item-check-icon {
+  display: none;
+}
+
+/* search icon shows animation when it's row is clicked (and search is started) */
+.list-item:active .list-item-icons-search {
+  display: flex !important;
+  color: var(--color-primary-white);
+  animation-name: resize-and-rotate;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+/* the animation for search icon */
+/* the search icon first rotates to right and grows bigger */
+/* then it rotates to left and grows smaller */
+@keyframes resize-and-rotate {
+
+  0%,
+  100% {
+    transform: rotate(0deg) scale(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: rotate(90deg) scale(1.5);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: rotate(-90deg) scale(0.5);
+  }
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id modal footer and bottom buttons */
+/* ---------------------------------------------------------------------------- */
+
+
+/* Correlation id modal has bottom div */
+.modal-bottom-div {
+  display: flex;
+  justify-content: center;
+}
+
+/* Modal has scroll-to-top button that has fixed position */
+.scroll-top-button {
+  display: none;
+  position: fixed;
+  bottom: 8px;
+  width: fit-content;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* Correlation id modal error message */
+/* ---------------------------------------------------------------------------- */
+
+/* Error message has icon and text */
+.error-message-placeholder {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  padding: 1em;
+}
+
+.error-message-icon {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message-text {
+  display: flex;
+  padding: 0.5em;
+  font-size: var(--font-size-content-medium);
+  font-weight: bold;
+  align-items: center;
+}
+
+/* Use class disabled-div when correlation id modal has error message */
+.disabled-div {
+  pointer-events: none;
+  opacity: 0.5;
+}

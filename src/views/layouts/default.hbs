@@ -1,0 +1,48 @@
+<!-- [The base html for application (default.hbs)] -->
+
+<!DOCTYPE html>
+<html lang="fi">
+
+<head>
+  <!-- Meta -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title -->
+  {{!-- 'title' is a string passed in this view's local variable --}}
+  <title>{{title}}</title>
+
+  <!-- External resources (stylesheets and libraries for browser) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script type="importmap">
+    {
+      "imports": {
+        "/external/modules/idb": "https://cdn.jsdelivr.net/npm/idb@8/+esm"
+      }
+    }
+  </script>
+
+  <!-- Shared resources (common for all applications) -->
+  <link rel="shortcut icon" href="/shared/images/favicon.ico">
+  <link rel="stylesheet" href="/shared/styles/main.css">
+  <script type="module" src="/shared/scripts/main.js"></script>
+
+  {{#if isLogin}}
+  <script type="module" src="/scripts/login.mjs"></script>
+  {{else}}
+  <!-- Local resources (application specific) -->
+  <link rel="stylesheet" href="/styles/viewer.css">
+  <script type="module" src="/scripts/viewer.mjs"></script>
+  <script type="module" src="/scripts/callRest.mjs"></script>
+  {{/if}}
+
+
+</head>
+
+{{!-- 'onload' is a function passed in this view's local variable --}}
+
+<body onload={{onload}}>
+  {{{body}}}
+</body>
+
+</html>

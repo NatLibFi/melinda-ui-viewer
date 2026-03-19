@@ -1,0 +1,82 @@
+<!-- [Viewer toolbar (toolbar.hbs)] -->
+
+<div id="viewerTools" class="tools toolbar">
+
+  <!-- Info text and icon are visible when viewer is set in reader mode -->
+  <div class="tools-wrapper">
+    <div id="readMode" class="read-mode" style="display: none">
+      <span class="material-icons icon-only">disabled_visible</span>
+      <div id="readModeInfo" class="read-mode-info">VIEWER ON LUKUNÄKYMÄSSÄ</div>
+    </div>
+    <button id="exit" class="material-icons tooltip icon-only" tooltip-text="Sulje näkymä" style="display: none"
+      onclick="return exitReaderMode(event)">logout</button>
+  </div>
+
+  <!-- Tools for searching and selecting a correlation id and sequence -->
+  <form class="toolbar flex-row highlight-border">
+
+    <div class="tools-wrapper">
+      <div class="select flex-column">
+        <label>Lokityyppi</label>
+        <select id="logType">
+          <option value="MERGE_LOG">Merge</option>
+          <option value="MATCH_LOG">Match</option>
+          <option value="EMPTY_LOG" hidden></option>
+        </select>
+      </div>
+      <button id="viewCorrelationIdsButton" type="button" class="material-icons tooltip icon-only"
+        tooltip-text="Etsi ID listasta" onclick="return openCorrelationIdListModal(event)">manage_search</button>
+    </div>
+
+    <div class="tools-wrapper">
+      <div class="flex-fill flex-column input">
+        <label>ID (correlation id)</label>
+        <input class="inputField uuidInput id-input" id="id" placeholder="00000000-0000-0000-0000-000000000000" />
+      </div>
+    </div>
+
+    <div class="tools-wrapper">
+      <div class="select flex-column sequence-container">
+        <label>Sekvenssi</label>
+        <div class="flex-row flex-fill">
+          <button id="previousSequence" class="material-icons tooltip navigate-button icon-only"
+            tooltip-text="Edellinen" onclick="return selectPrevious(event)" disabled="true">navigate_before</button>
+          <div class="select flex-column flex-fill sequence-select">
+            <select id="sequence" onchange="return loadLog(event)"></select>
+          </div>
+          <div class="flex-fill flex-column input">
+            <input id="sequenceInput" class="inputField" placeholder="000" maxlength="3" />
+          </div>
+          <button id="nextSequence" class="material-icons tooltip navigate-button icon-only" tooltip-text="Seuraava"
+            onclick="return selectNext(event)" disabled="true">navigate_next</button>
+        </div>
+      </div>
+      <button class="material-icons tooltip search-button icon-only" tooltip-text="Hae"
+        onclick="return doSearchPress(event)">search</button>
+      <button id="clearLogs" class="material-icons tooltip clear-logs-button icon-only" tooltip-text="Tyhjää haku"
+        onclick="return clearLogView(event)" disabled="true">backspace</button>
+    </div>
+
+  </form>
+
+  <!-- Tools for handling selected correlation id and/or sequence -->
+  <div class="tools-wrapper">
+    <div class="flex-row">
+      <button id="protect" class="material-icons tooltip icon-only" tooltip-text="Turvaa sekvenssi"
+        onclick="return protect(event)" disabled="true">lock_open</button>
+      <button id="delete" class="material-icons tooltip icon-only" tooltip-text="Poista loki." title="Vain yli 7 vrk vanhan lokin voi poistaa"
+        onclick="return openRemoveDialog(event)" disabled="true">delete</button>
+      <button id="share" class="material-icons tooltip icon-only" tooltip-text="Jaa linkki"
+        onclick="return copyLink(event)">share</button>
+      <button id="export" class="material-icons tooltip icon-only" tooltip-text="Lataa tiedosto" disabled="true"
+        onclick="return downloadFile(event)">file_download</button>
+      <button id="import" class="material-icons tooltip icon-only" tooltip-text="Avaa tiedosto"
+        onclick="return uploadFile(event)">file_upload</button>
+      <button id="showLogInfo" class="material-icons tooltip icon-only" tooltip-text="Näytä lokin lisätiedot"
+        onclick="return showLogInfo(event)">info_outline</button>
+      <button id="hideLogInfo" class="material-icons tooltip icon-only inverse" tooltip-text="Piilota lokin lisätiedot"
+        style="display:none" onclick="return hideLogInfo(event)">info</button>
+    </div>
+  </div>
+
+</div>

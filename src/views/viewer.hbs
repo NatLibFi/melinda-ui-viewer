@@ -1,0 +1,49 @@
+<!-- -------------------------------------------------------------------------- -->
+<!-- Viewer body -->
+<!-- -------------------------------------------------------------------------- -->
+
+<div id="bodywrapper" class="viewport-full flex-column">
+
+  <!-- ------------------------------------------------------------------------ -->
+  <!-- Navigation bar -->
+  {{> sharedPartials/navbar }}
+
+  <!-- ------------------------------------------------------------------------ -->
+  <!-- Progress bar -->
+  <div id="progressbar" class="progress-bar-inactive"></div>
+
+  <!-- ------------------------------------------------------------------------ -->
+  <!-- Application -->
+  <div id="root">
+
+    <!-- ---------------------------------------------------------------------- -->
+    <!-- Viewer tab -->
+    <div id="viewer">
+
+      <!-- Viewer Toolbar -->
+      {{> localPartials/toolbar}}
+
+      <!-- Dialog popup for removing logs -->
+      {{> localPartials/dialogLogRemove}}
+
+      <!-- Dialog popup for uploading files -->
+      {{> localPartials/dialogFileUpload}}
+
+      <!-- Two panels for viewing log and records -->
+      {{> localPartials/panelLogRecord }}
+
+      <!-- Modal for browsing and selecting a correlation id (log) from a list -->
+      {{> localPartials/modalLogsList }}
+
+      <!-- For displaying info messages and errors to user -->
+      {{> sharedPartials/snackbars }}
+
+    </div>
+
+  </div>
+
+  <!-- ------------------------------------------------------------------------ -->
+  <!-- Footer -->
+  {{> sharedPartials/footer }}
+
+</div>

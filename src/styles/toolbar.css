@@ -1,0 +1,207 @@
+/* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+/* Viewer toolbars -------------------------------------------------------------*/
+/* ---------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------- */
+
+.tools {
+  flex-wrap: wrap;
+  flex-shrink: 2;
+}
+
+.tools-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1420px) {
+  #viewer .tools {
+    row-gap: 10px;
+  }
+
+  #viewerTools>div:first-child {
+    flex-basis: 100%;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #viewer .tools {
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  #viewer .tools .toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 20px;
+  }
+}
+
+.input>label,
+.select>label,
+.sequence-container>label {
+  color: var(--color-melinda-green-custom);
+  font-family: var(--font-family-label);
+  font-size: var(--font-size-label-medium);
+  text-align: center;
+}
+
+.input>input {
+  border: 0;
+  border-bottom: 1pt solid grey;
+  outline: none;
+  font-family: var(--font-family-input);
+  font-size: var(--font-size-input-medium);
+}
+
+.select>select {
+  border: 0;
+  border-bottom: 1pt solid grey;
+  outline: none;
+  font-family: var(--font-family-content);
+  font-size: var(--font-size-content-medium);
+}
+
+.toolbar button:not(.dialog-cancel-button, .inverse) {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: var(--color-blue-100);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.toolbar button.inverse {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.toolbar button:hover,
+.tools button.search-button:hover {
+  color: var(--color-primary-white);
+  background-color: var(--color-blue-100);
+  border-color: var(--color-blue-100);
+}
+
+.toolbar button:active,
+.tools button.search-button:active,
+.tools button#exit:active {
+  color: var(--color-primary-white);
+  background-color: var(--color-blue-100);
+  border-color: var(--color-blue-100);
+}
+
+.toolbar button:disabled,
+.tools button.search-button:disabled {
+  color: var(--color-grey-100);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.uuidInput {
+  width: 37ch;
+}
+
+.tools #logType {
+  text-align: end;
+  margin-right: 1ch;
+  height: 24px;
+}
+
+.id-input {
+  display: flex;
+  align-items: flex-end;
+  font-family: var(--font-family-mono) !important;
+}
+
+/* Sequence container */
+
+.tools .sequence-container {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  min-width: 105px;
+}
+
+.sequence-container label {
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+}
+
+.sequence-container .sequence-select {
+  justify-content: flex-end;
+}
+
+.sequence-container #sequence {
+  display: none;
+  width: 6ch;
+  text-align: end;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.sequence-container #sequenceInput {
+  width: 6ch;
+  text-align: end;
+  margin-left: 1px;
+  margin-right: 3px;
+}
+
+.sequence-container .navigate-button {
+  padding: 0px !important;
+  margin: 0px !important;
+  max-height: 24px;
+}
+
+/* Adding some color to make the search button pop in toolbar */
+.tools button.search-button {
+  color: var(--color-primary-white);
+  background-color: var(--color-melinda-lightblue-custom);
+  border-color: var(--color-melinda-lightblue-custom);
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.tools button.search-button:disabled {
+  color: var(--color-grey-100);
+  background-color: var(--color-grey-60);
+  border-color: transparent;
+}
+
+
+/* Viewer reader mode styles */
+/* ---------------------------------------------------------------------------- */
+
+.tools .read-mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tools .read-mode-info {
+  display: flex;
+  padding-left: 15px;
+  padding-right: 15px;
+  color: grey;
+}
+
+.tools .read-mode span {
+  color: grey;
+}
+
+.tools button#exit {
+  color: var(--color-primary-white);
+  background-color: var(--color-melinda-lightblue-custom);
+  border-color: var(--color-melinda-lightblue-custom);
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.tools button#exit:hover {
+  color: var(--color-primary-white);
+  background-color: var(--color-blue-100);
+  border-color: var(--color-blue-100);
+}

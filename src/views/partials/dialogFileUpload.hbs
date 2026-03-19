@@ -1,0 +1,66 @@
+<!-- [File upload partial (dialogFileUpload.hbs)] -->
+
+<dialog id="dialogForUpload">
+  <form method="dialog">
+
+    <div class="dialog-icon material-icons">
+      upload_file
+    </div>
+
+    <div class="dialog-headline">
+      Avaa tiedosto lukunäkymässä
+    </div>
+
+    <div class="dialog-supporting-text">
+
+      <div class="file-input">
+        <input type="file" id="fileUpload" accept=".json, .txt" style="display:none" />
+        <button id="fileSelect" type="button" class="file-button" onclick="return openFileBrowse(event)">Selaa</button>
+        <div id="selectedFileName" class="file-name">Ei valittua tiedostoa</div>
+        <button id="clearFileSelect" type="button" class="material-icons close-button small icon-only"
+          title="Poista valittu tiedosto" onclick="return clearSelectedFile(event)" style="display: none">close</button>
+      </div>
+
+      <hr>
+      <div class="instructions-headline">
+        <div>
+          OHJEET
+        </div>
+        <button id="showInstructionsButton" onclick="return showInstructions(event)"
+          class="material-icons tooltip icon-only" tooltip-text="Näytä">expand_more</button>
+        <button id="hideInstructionsButton" onclick="return hideInstructions(event)"
+          class="material-icons tooltip icon-only" tooltip-text="Piilota" style="display: none">expand_less</button>
+      </div>
+
+      <div id="instructions" style="display: none">
+        <ul>
+          <li>Valitse tiedosto ensin selaamalla omalta laitteeltasi.</li>
+          <li>
+            Tiedoston pääte on oltava .json tai .txt.
+          </li>
+          <li>
+            Tiedostossa tietueiden on oltava json-muodossa.
+          </li>
+          <li>
+            Klikkaa lopuksi 'Avaa tiedosto'.
+          </li>
+          <li>
+            Tietueet avautuvat Viewerissä lukunäkymään.
+          </li>
+          <li>
+            Lukunäkymässä tietueiden käsittelyä on rajoitettu.
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="dialog-actions">
+      <button class="dialog-cancel-button alternate-red" id="cancelUploadButton"
+        onclick="return cancelUpload(event)">Peruuta</button>
+      <button class="dialog-confirm-button" id="confirmUploadButton" title="Valitse ensin tiedosto" disabled="true"
+        onclick="return confirmUpload(event)">Avaa tiedosto</button>
+    </div>
+
+  </form>
+</dialog>

@@ -1,0 +1,27 @@
+<!-- [Remove log partial (dialogLogRemove.hbs)] -->
+
+<dialog id="dialogForRemove">
+  <form method="dialog">
+
+    <div class="dialog-icon material-icons">
+      delete_outline
+    </div>
+
+    <div class="dialog-headline">
+      Haluatko varmasti poistaa ID:n?
+    </div>
+
+    <div class="dialog-supporting-text">
+      <p>Seuraava ID poistetaan pysyvästi:</p>
+      <p><span id="idToBeRemoved" class="correlation-id-font"></span></p>
+    </div>
+
+    <div class="dialog-actions">
+      <button class="dialog-cancel-button alternate-red" id="cancelRemoveButton"
+        onclick="return cancelRemove(event)">Peruuta</button>
+      <button class="dialog-confirm-button" id="confirmRemoveButton" onclick="return confirmRemove(event)">Vahvista
+        poisto</button>
+    </div>
+
+  </form>
+</dialog>
