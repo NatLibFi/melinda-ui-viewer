@@ -11,8 +11,8 @@ import {createAuthHandler} from '../../middlewares.js';
 export function createMainViewRouter(passport) {
   const authHandler = createAuthHandler(passport);
   return new Router()
-    .get('/', authHandler({failureRedirects: '/login'}), renderViewer)
-    .get('/login', authHandler({successRedirects: '/', allowUnauthorized: true}), renderLogin);
+    .get('/', authHandler({failureRedirects: '/login', preserveURL: true}), renderViewer)
+    .get('/login', authHandler({successRedirects: '/', allowUnauthorized: true, preserveURL: true}), renderLogin);
 
 
   function renderViewer(req, res) {

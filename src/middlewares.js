@@ -51,12 +51,14 @@ export function createAuthHandler(passport) {
    *
    */
   function authHandler(params = {}) {
-    const {failureRedirects, successRedirects, allowUnauthorized = false} = params;
+    const {failureRedirects, successRedirects, allowUnauthorized = false, preserveURL = false} = params;
     return (req, res, next) => {
+      const URL = preserveURL ? `${req.originalUrl.replace(req.path, '')}` : '';
+      console.log(URL);
       passport.authenticate('jwt', {session: false}, (err, user) => {
         if (err || !user) {
           if (failureRedirects) {
-            return res.redirect(failureRedirects);
+            return res.redirect(`${failureRedirects}${URL}`);
           }
           if (allowUnauthorized) {
             return next();
@@ -68,7 +70,7 @@ export function createAuthHandler(passport) {
         req.user = user;
 
         if (successRedirects) {
-          return res.redirect(successRedirects);
+          return res.redirect(`${successRedirects}${URL}`);
         }
 
         return next();
