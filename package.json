@@ -29,7 +29,8 @@
     "dev": "DEBUG=@natlibfi/* nodemon",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "test": "npm run lint"
+    "test:base": "node --test --test-force-exit --experimental-test-coverage --test-reporter=spec --test-coverage-include=src/** './tests/*.test.mjs' './tests/**/*.test.mjs'",
+    "test": "npm run lint && npm run test:base"
   },
   "dependencies": {
     "@natlibfi/melinda-backend-commons": "^3.0.5",
