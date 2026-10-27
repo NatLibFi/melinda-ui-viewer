@@ -51,7 +51,12 @@ export function createAuthHandler(passport) {
   function authHandler(params = {}) {
     const {failureRedirects, successRedirects, allowUnauthorized = false, preserveURL = false} = params;
     return (req, res, next) => {
-      const URL = preserveURL ? `${req.originalUrl.replace(req.path, '')}` : '';
+      // Preserve only the relative suffix (query string) of the
+      // original URL, never an absolute target: originalUrl may
+      // contain the client-sent absolute-form request target.
+      const URL = preserveURL && req.originalUrl.startsWith(req.path)
+        ? req.originalUrl.slice(req.path.length)
+        : '';
       console.log(URL);
       passport.authenticate('jwt', {session: false}, (err, user) => {
         if (err || !user) {
