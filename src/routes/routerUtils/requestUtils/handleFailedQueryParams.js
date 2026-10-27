@@ -55,7 +55,11 @@ export function handleFailedQueryParams(req, res, next) {
   //  - not all parameters are present in every request
 
   function checkviewerQueryParams(queryParams) {
-    return [];
+    const {sequence} = queryParams;
+    if (sequence === undefined) {
+      return [];
+    }
+    return [{name: 'sequence', value: /^[0-9]+$/.test(String(sequence))}];
   }
 
   function testQueryParameter(queryParameter, validValues) {

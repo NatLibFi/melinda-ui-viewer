@@ -56,7 +56,11 @@ export function handleFailedRouteParams(req, res, next) {
   //  - all parameters are not present in every request
 
   function checkviewerRouteParams(routeParams) {
-    return [];
+    const {id} = routeParams;
+    if (id === undefined) {
+      return [];
+    }
+    return [{name: 'id', value: /^[0-9]+$/.test(id)}];
   }
 
 }
