@@ -173,13 +173,11 @@ export async function startApp(configOptions) {
     //Middleware function to handle 404 pages
 
     function handlePageNotFound(req, res, next) {
-      const {user} = req.oidc;
-
       logger.warn(`Error: it seems that this page is not found!`);
       logger.verbose(`Request method: ${req.method} | Path: ${req.path} | Query parameters: ${JSON.stringify(req.query)}`);
 
       const renderedView = 'pageNotFound';
-      const localVariable = {title: 'Sivua ei löydy', username: user.name};
+      const localVariable = {title: 'Sivua ei löydy', username: req.user?.name ?? ''};
 
       res.status(404);
       res.render(renderedView, localVariable);
