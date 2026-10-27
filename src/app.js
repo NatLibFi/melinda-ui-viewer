@@ -145,7 +145,7 @@ export async function startApp(configOptions) {
     app.use('/logout', passport.authenticate('jwt', {session: false}), (req, res) => {
       res.redirect('/auth/logout');
     });
-    app.use('/rest', createLogServiceRouter(melindaApiOptions));
+    app.use('/rest', createLogServiceRouter(melindaApiOptions, passport));
     app.use('/auth', createAuthRouter(passport, jwtOptions));
 
     //---------------------------------------------------//

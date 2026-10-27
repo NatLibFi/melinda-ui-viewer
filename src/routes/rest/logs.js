@@ -1,6 +1,7 @@
 import {Router} from 'express';
 import {createLogger} from '@natlibfi/melinda-backend-commons';
 import {createLogsOperator} from '../../services/index.js';
+import {createAuthHandler} from '../../middlewares.js';
 import {handleError, handleFailedQueryParams, handleFailedRouteParams} from '../routerUtils/routerUtils.js';
 
 //****************************************************************************//
@@ -10,11 +11,13 @@ import {handleError, handleFailedQueryParams, handleFailedRouteParams} from '../
 //****************************************************************************//
 
 
-export function createLogServiceRouter(melindaApiOptions) {
+export function createLogServiceRouter(melindaApiOptions, passport) {
   const logger = createLogger();
   const logsOperator = createLogsOperator(melindaApiOptions);
+  const authHandler = createAuthHandler(passport);
 
   return new Router()
+    .use(authHandler())
     .use(handleFailedQueryParams)
     .get('/match-log/:id', handleFailedRouteParams, getMatchLog)
     .get('/merge-log/:id', handleFailedRouteParams, getMergeLog)
