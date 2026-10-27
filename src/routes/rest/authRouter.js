@@ -68,7 +68,7 @@ export function createAuthRouter(passport, jwtOptions) {
     //cookie age in hours
     const cookieAgeDevelopment = 12;
     const cookieAgeProduction = 9;
-    const cookieAge = getHoursInMilliSeconds(isInProduction ? cookieAgeDevelopment : cookieAgeProduction);
+    const cookieAge = getHoursInMilliSeconds(isInProduction ? cookieAgeProduction : cookieAgeDevelopment);
 
     return cookieAge;
 
