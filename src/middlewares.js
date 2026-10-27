@@ -1,5 +1,3 @@
-// import {createLogger} from '@natlibfi/melinda-backend-commons';
-
 /**
 * Create auth handler
 *

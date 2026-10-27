@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {createLogger} from '@natlibfi/melinda-backend-commons';
+import {createLogger} from '@natlibfi/melinda-commons';
 import {createLogsOperator} from '../../services/index.js';
 import {createAuthHandler} from '../../middlewares.js';
 import {handleError, handleFailedQueryParams, handleFailedRouteParams} from '../routerUtils/routerUtils.js';

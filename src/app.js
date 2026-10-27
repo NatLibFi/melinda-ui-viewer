@@ -9,7 +9,7 @@ import cors from 'cors';
 import {AlephStrategy} from '@natlibfi/passport-melinda-aleph';
 import {MelindaJwtStrategy, verify, cookieExtractor} from '@natlibfi/passport-melinda-jwt';
 
-import {createExpressLogger, createLogger} from '@natlibfi/melinda-backend-commons';
+import {createExpressLogger, createLogger} from '@natlibfi/melinda-commons';
 import {createStatusRouter, createMainViewRouter, createLogServiceRouter, createAuthRouter} from './routes/index.js';
 
 

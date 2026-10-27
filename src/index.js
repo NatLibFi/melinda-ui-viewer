@@ -1,8 +1,8 @@
 // All exportables from config.js are named here as config.
 import * as config from './config.js';
 
-// importing some helpers from melinda-backend-commons
-import {createLogger, handleInterrupt} from '@natlibfi/melinda-backend-commons';
+// importing some helpers from melinda-commons
+import {createLogger, handleInterrupt} from '@natlibfi/melinda-commons';
 
 // importing the express app
 import {startApp} from './app.js';

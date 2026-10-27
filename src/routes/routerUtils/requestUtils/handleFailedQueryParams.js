@@ -1,5 +1,4 @@
-import {createLogger} from '@natlibfi/melinda-backend-commons';
-import {Error} from '@natlibfi/melinda-commons';
+import {createLogger, Error} from '@natlibfi/melinda-commons';
 import httpStatus from 'http-status';
 
 //*****************************************************************************

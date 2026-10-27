@@ -1,8 +1,7 @@
 import httpStatus from 'http-status';
-import {generateAuthorizationHeader} from '@natlibfi/melinda-commons';
+import {createLogger, generateAuthorizationHeader} from '@natlibfi/melinda-commons';
 import {generateJwtToken} from '@natlibfi/passport-melinda-jwt';
 import {Router} from 'express';
-import {createLogger} from '@natlibfi/melinda-backend-commons';
 import {sanitizeString} from '../../services/authService.js';
 import {handleError} from '../routerUtils/routerUtils.js';
 

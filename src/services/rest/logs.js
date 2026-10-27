@@ -1,4 +1,4 @@
-import {createLogger} from '@natlibfi/melinda-backend-commons';
+import {createLogger} from '@natlibfi/melinda-commons';
 import {createMelindaApiLogClient} from '@natlibfi/melinda-rest-api-client';
 
 //****************************************************************************//

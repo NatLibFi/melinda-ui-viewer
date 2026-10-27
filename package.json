@@ -33,11 +33,10 @@
     "test": "npm run lint && npm run test:base"
   },
   "dependencies": {
-    "@natlibfi/melinda-backend-commons": "^3.0.6",
-    "@natlibfi/melinda-commons": "^14.0.2",
+    "@natlibfi/melinda-commons": "^16.0.0",
     "@natlibfi/melinda-rest-api-client": "^6.0.3",
     "@natlibfi/melinda-ui-commons": "^6.0.0",
-    "@natlibfi/passport-melinda-aleph": "^4.0.0",
+    "@natlibfi/passport-melinda-aleph": "^5.0.0",
     "@natlibfi/passport-melinda-jwt": "^3.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -49,5 +48,8 @@
   "devDependencies": {
     "esbuild": "^0.28.1",
     "eslint": "^10.13.0"
+  },
+  "overrides": {
+    "nodemailer": "10.2.1"
   }
 }
