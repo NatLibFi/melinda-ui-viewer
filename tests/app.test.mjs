@@ -1,7 +1,7 @@
 import {after, before, test} from 'node:test';
 import assert from 'node:assert/strict';
 import {startTestApp, makeAuthCookie, fetchJson} from './helpers/app.mjs';
-import {fixtures} from './helpers/melindaStub.mjs';
+import {fixtures, testCorrelationId} from './helpers/melindaStub.mjs';
 
 // App-level server tests for melinda-ui-viewer.
 // The full app is started once against the in-test stub Melinda server.
@@ -12,6 +12,8 @@ import {fixtures} from './helpers/melindaStub.mjs';
 //   T4 GET /rest/correlation-id-list with cookie -> 200 passthrough;
 //      malformed id -> 4xx, rejected before reaching the API
 //   T5 POST /auth/getBaseToken missing fields -> 4xx, not 500
+//   T6 UUID v4 correlation ids pass validation and reach the API;
+//      digit-only and non-v4 ids are rejected locally
 
 let app;
 const authCookie = makeAuthCookie();
@@ -31,25 +33,25 @@ test('T1: unknown page returns 404, not a 500 crash (GET /nonexistent)', async (
     `GET /nonexistent should return 404, got ${result.status} (req.oidc crash in handlePageNotFound)`);
 });
 
-test('T2: unauthenticated GET /rest/match-log/123 does not return 200 with data', async () => {
+test('T2: unauthenticated GET /rest/match-log/:id does not return 200 with data', async () => {
   app.stub.reset();
-  const result = await fetchJson(app.baseUrl, '/rest/match-log/123');
+  const result = await fetchJson(app.baseUrl, `/rest/match-log/${testCorrelationId}`);
 
   assert.ok(result.status >= 400,
-    `unauthenticated GET /rest/match-log/123 should be rejected, got ${result.status} with body ${JSON.stringify(result.payload)}`);
+    `unauthenticated GET /rest/match-log/:id should be rejected, got ${result.status} with body ${JSON.stringify(result.payload)}`);
   assert.equal(result.payload, null,
-    `unauthenticated GET /rest/match-log/123 must not return data, got ${JSON.stringify(result.payload)}`);
+    `unauthenticated GET /rest/match-log/:id must not return data, got ${JSON.stringify(result.payload)}`);
 });
 
-test('T3: unauthenticated DELETE /rest/remove/123 and PUT /rest/protect/123 do not succeed', async () => {
+test('T3: unauthenticated DELETE /rest/remove/:id and PUT /rest/protect/:id do not succeed', async () => {
   app.stub.reset();
-  const remove = await fetchJson(app.baseUrl, '/rest/remove/123', {method: 'DELETE'});
-  const protect = await fetchJson(app.baseUrl, '/rest/protect/123', {method: 'PUT'});
+  const remove = await fetchJson(app.baseUrl, `/rest/remove/${testCorrelationId}`, {method: 'DELETE'});
+  const protect = await fetchJson(app.baseUrl, `/rest/protect/${testCorrelationId}`, {method: 'PUT'});
 
   assert.ok(remove.status >= 400,
-    `unauthenticated DELETE /rest/remove/123 should be rejected, got ${remove.status} with body ${JSON.stringify(remove.payload)}`);
+    `unauthenticated DELETE /rest/remove/:id should be rejected, got ${remove.status} with body ${JSON.stringify(remove.payload)}`);
   assert.ok(protect.status >= 400,
-    `unauthenticated PUT /rest/protect/123 should be rejected, got ${protect.status} with body ${JSON.stringify(protect.payload)}`);
+    `unauthenticated PUT /rest/protect/:id should be rejected, got ${protect.status} with body ${JSON.stringify(protect.payload)}`);
 });
 
 test('T4: authenticated correlation-id-list passes the stub through, and malformed ids are rejected locally', async () => {
@@ -76,3 +78,43 @@ test('T5: POST /auth/getBaseToken with missing username/password returns 4xx, no
   assert.ok(result.status >= 400 && result.status < 500,
     `POST /auth/getBaseToken with missing username/password should return 4xx, got ${result.status} with body ${JSON.stringify(result.payload)}`);
 });
+
+test('T6: UUID v4 correlation ids reach the API; digit-only and non-v4 ids are rejected locally', async () => {
+  const accepted = [
+    `/rest/match-log/${testCorrelationId}`,
+    `/rest/match-log/${testCorrelationId}?sequence=2`,
+    `/rest/merge-log/${testCorrelationId.toUpperCase()}`
+  ];
+
+  for (const pathAndQuery of accepted) {
+    app.stub.reset();
+    const result = await fetchJson(app.baseUrl, pathAndQuery, {cookie: authCookie});
+    assert.equal(result.status, 200,
+      `GET ${pathAndQuery} should return 200, got ${result.status} with body ${JSON.stringify(result.payload)}`);
+    assert.ok(app.stub.requests.some(request => request.url.includes(`correlationId=${encodeURIComponent(pathAndQuery.split('/')[3].split('?')[0])}`)),
+      `GET ${pathAndQuery} should be forwarded to the Melinda API, stub saw: ${JSON.stringify(app.stub.requests)}`);
+  }
+
+  app.stub.reset();
+  const protect = await fetchJson(app.baseUrl, `/rest/protect/${testCorrelationId}?sequence=1`, {cookie: authCookie, method: 'PUT'});
+  assert.equal(protect.status, 200,
+    `PUT /rest/protect/:uuid should return 200, got ${protect.status} with body ${JSON.stringify(protect.payload)}`);
+
+  const rejected = [
+    '/rest/match-log/123',
+    '/rest/match-log/3f2b8c1e9a4d4e7fb2c10d5e6f7a8b9c',
+    '/rest/match-log/3f2b8c1e-9a4d-1e7f-b2c1-0d5e6f7a8b9c',
+    `/rest/match-log/${testCorrelationId}x`,
+    `/rest/match-log/${testCorrelationId}?sequence=abc`
+  ];
+
+  for (const pathAndQuery of rejected) {
+    app.stub.reset();
+    const result = await fetchJson(app.baseUrl, pathAndQuery, {cookie: authCookie});
+    assert.equal(result.status, 400,
+      `GET ${pathAndQuery} should be rejected with 400, got ${result.status} with body ${JSON.stringify(result.payload)}`);
+    assert.equal(app.stub.requests.length, 0,
+      `GET ${pathAndQuery} must not be forwarded to the Melinda API, but stub saw: ${JSON.stringify(app.stub.requests)}`);
+  }
+});
+

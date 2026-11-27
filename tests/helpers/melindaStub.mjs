@@ -12,16 +12,18 @@ import http from 'node:http';
 // It returns fixed JSON fixtures and records every received request
 // ({method, url, headers}) so tests can assert what the app forwarded.
 
+export const testCorrelationId = '3f2b8c1e-9a4d-4e7f-b2c1-0d5e6f7a8b9c';
+
 export const fixtures = {
   matchLogs: [
-    {correlationId: '123', logItemType: 'MATCH_LOG', blobSequence: '001', catalogers: ['test-cataloger']},
-    {correlationId: '123', logItemType: 'MERGE_LOG', blobSequence: '002', catalogers: ['test-cataloger']}
+    {correlationId: testCorrelationId, logItemType: 'MATCH_LOG', blobSequence: '001', catalogers: ['test-cataloger']},
+    {correlationId: testCorrelationId, logItemType: 'MERGE_LOG', blobSequence: '002', catalogers: ['test-cataloger']}
   ],
   logsList: [
-    {correlationId: '123', logItemTypes: ['MATCH_LOG'], creationTime: '2026-10-26T10:00:00Z'}
+    {correlationId: testCorrelationId, logItemTypes: ['MATCH_LOG'], creationTime: '2026-10-26T10:00:00Z'}
   ],
-  protectResult: {correlationId: '123', protectStatus: 'PROTECTED'},
-  removeResult: {correlationId: '123', deleteStatus: 'DELETED'}
+  protectResult: {correlationId: testCorrelationId, protectStatus: 'PROTECTED'},
+  removeResult: {correlationId: testCorrelationId, deleteStatus: 'DELETED'}
 };
 
 export function startMelindaStub() {
