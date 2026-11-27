@@ -10,6 +10,16 @@
     </div>
   </div>
 
+  <!-- Match compare mode (scripts/recordCompare.mjs): counts and filters of the match log view -->
+  <div id="matchCompareBar" class="match-compare-bar" hidden>
+    <span><span class="match-compare-count match-compare-count-changed" data-count="changed"></span>eroavaa</span>
+    <span><span class="match-compare-count match-compare-count-incoming" data-count="incoming"></span>vain sisääntulevassa</span>
+    <span><span class="match-compare-count match-compare-count-melinda" data-count="melinda"></span>vain Melindassa</span>
+    <span><span class="match-compare-count" data-count="same"></span>samaa</span>
+    <label><input type="checkbox" id="matchCompareOnlyDifferences">Näytä vain erot</label>
+    <label><input type="checkbox" id="matchCompareShowNoise" checked>Näytä 001, 003, 005 ja Melindan sisäiset kentät (CAT, LOW, SID, 884)</label>
+  </div>
+
   <!-- Record merge panel contains the marc records of the log -->
   <div class="record-merge-panel">
 

@@ -1,0 +1,157 @@
+/* ---------------------------------------------------------------------------- */
+/* Match compare mode (scripts/recordCompare.mjs)                               */
+/* ---------------------------------------------------------------------------- */
+/*                                                                              */
+/* In the match log view the incoming record (#record1) and the matching        */
+/* Melinda record (#record4) are shown side by side with the fields aligned.    */
+/* The panel is a grid with two columns. Each column, its card and the record   */
+/* use the rows of the panel (subgrid): row 1 header, row 2 note, then one row  */
+/* per field pair. recordCompare.mjs sets how many rows the column spans.       */
+/*                                                                              */
+/*   Changed field      yellow background, the differing parts marked          */
+/*   Only incoming      green background, gap in the Melinda record            */
+/*   Only Melinda       blue background, gap in the incoming record            */
+/*   Marks              green (incoming) and blue (Melinda)                     */
+/*   Noise              001, 003, 005 and CAT, LOW, SID, 884 dimmed             */
+/* ---------------------------------------------------------------------------- */
+
+#viewer .match-compare-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 24px;
+  margin: 8px 0;
+  font-family: var(--font-family-content);
+  font-size: 14px;
+
+  &[hidden] {
+    display: none;
+  }
+
+  .match-compare-count {
+    display: inline-block;
+    min-width: 22px;
+    margin-right: 4px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background-color: var(--color-grey-20);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .match-compare-count-changed {
+    background-color: var(--color-yellow-40);
+  }
+
+  .match-compare-count-incoming {
+    background-color: var(--color-green-40);
+  }
+
+  .match-compare-count-melinda {
+    background-color: var(--color-blue-40);
+  }
+
+  label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  #viewer .record-merge-panel.match-compare {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 48vw));
+    justify-content: center;
+    align-items: stretch;
+
+    /* !important: searchLog.mjs shows the column with an inline display: block */
+    .col {
+      display: grid !important;
+      grid-template-rows: subgrid;
+      width: auto;
+      min-width: 0;
+    }
+
+    .col > .box-shadow {
+      display: grid;
+      grid-row: 1 / -1;
+      grid-template-rows: subgrid;
+      min-width: 0;
+    }
+
+    .header {
+      grid-row: 1;
+    }
+
+    .note {
+      grid-row: 2;
+    }
+
+    .marc-record {
+      display: grid;
+      grid-row: 3 / -1;
+      grid-template-rows: subgrid;
+      min-width: 0;
+    }
+  }
+}
+
+#viewer .record-merge-panel.match-compare .marc-record {
+  .match-compare-changed {
+    background-color: var(--color-yellow-20);
+  }
+
+  .match-compare-incoming:not(.match-compare-gap) {
+    background-color: var(--color-green-20);
+  }
+
+  .match-compare-melinda:not(.match-compare-gap) {
+    background-color: var(--color-blue-20);
+  }
+
+  .match-compare-gap {
+    min-height: 0;
+    background: repeating-linear-gradient(135deg, transparent 0 6px, var(--color-grey-20) 6px 8px);
+  }
+
+  .match-compare-noise {
+    background: none;
+    opacity: 0.55;
+  }
+
+  .match-compare-mark-incoming {
+    border-radius: 2px;
+    background-color: var(--color-green-60);
+  }
+
+  .match-compare-mark-melinda {
+    border-radius: 2px;
+    background-color: var(--color-blue-60);
+  }
+
+  .match-compare-changed-incoming {
+    border-radius: 2px;
+    background-color: var(--color-green-20);
+  }
+
+  .match-compare-changed-melinda {
+    border-radius: 2px;
+    background-color: var(--color-blue-20);
+  }
+}
+
+/* Filters of the bar. A hidden row leaves an empty grid row of no height */
+#viewer .record-merge-panel.match-compare-only-differences .marc-record :is(.match-compare-same, .match-compare-noise),
+#viewer .record-merge-panel.match-compare-hide-noise .marc-record .match-compare-noise {
+  display: none;
+}
+
+/* Narrow screens: the records one after the other, no gaps */
+@media screen and (max-width: 699px) {
+  #viewer .record-merge-panel.match-compare .match-compare-gap {
+    display: none;
+  }
+}
