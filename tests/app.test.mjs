@@ -16,6 +16,7 @@ import {fixtures, testCorrelationId} from './helpers/melindaStub.mjs';
 //      digit-only and non-v4 ids are rejected locally
 //   T7 protect/remove forward the correlation id and params to the
 //      Melinda API log endpoints
+//   T8 the melinda auth cookie is HttpOnly and SameSite=Lax
 
 let app;
 const authCookie = makeAuthCookie();
@@ -136,4 +137,15 @@ test('T7: protect and remove forward the correlation id and params to the Melind
   assert.deepEqual(remove.payload, fixtures.removeResult);
   assert.deepEqual(app.stub.requests.map(({method, url}) => ({method, url})), [{method: 'DELETE', url: `/logs/${testCorrelationId}?force=1`}],
     `remove should call DELETE /logs/:correlationId?force=1, stub saw: ${JSON.stringify(app.stub.requests)}`);
+});
+
+test('T8: the melinda auth cookie is set HttpOnly and SameSite=Lax', async () => {
+  const result = await fetchJson(app.baseUrl, '/auth/verifyJwt', {cookie: authCookie});
+  assert.equal(result.status, 200,
+    `GET /auth/verifyJwt with a valid cookie should return 200, got ${result.status}`);
+
+  const setCookie = result.headers.get('set-cookie') ?? '';
+  assert.match(setCookie, /^melinda=/u, `expected a melinda cookie, got: ${setCookie}`);
+  assert.match(setCookie, /;\s*HttpOnly/iu, `cookie should be HttpOnly, got: ${setCookie}`);
+  assert.match(setCookie, /;\s*SameSite=Lax/iu, `cookie should be SameSite=Lax, got: ${setCookie}`);
 });
