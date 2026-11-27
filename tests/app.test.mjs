@@ -14,6 +14,8 @@ import {fixtures, testCorrelationId} from './helpers/melindaStub.mjs';
 //   T5 POST /auth/getBaseToken missing fields -> 4xx, not 500
 //   T6 UUID v4 correlation ids pass validation and reach the API;
 //      digit-only and non-v4 ids are rejected locally
+//   T7 protect/remove forward the correlation id and params to the
+//      Melinda API log endpoints
 
 let app;
 const authCookie = makeAuthCookie();
@@ -118,3 +120,20 @@ test('T6: UUID v4 correlation ids reach the API; digit-only and non-v4 ids are r
   }
 });
 
+test('T7: protect and remove forward the correlation id and params to the Melinda API', async () => {
+  app.stub.reset();
+  const protect = await fetchJson(app.baseUrl, `/rest/protect/${testCorrelationId}?sequence=2`, {cookie: authCookie, method: 'PUT'});
+  assert.equal(protect.status, 200,
+    `PUT /rest/protect/:id should return 200, got ${protect.status} with body ${JSON.stringify(protect.payload)}`);
+  assert.deepEqual(protect.payload, fixtures.protectResult);
+  assert.deepEqual(app.stub.requests.map(({method, url}) => ({method, url})), [{method: 'PUT', url: `/logs/${testCorrelationId}?blobSequence=2`}],
+    `protect should call PUT /logs/:correlationId?blobSequence=2, stub saw: ${JSON.stringify(app.stub.requests)}`);
+
+  app.stub.reset();
+  const remove = await fetchJson(app.baseUrl, `/rest/remove/${testCorrelationId}?force=1`, {cookie: authCookie, method: 'DELETE'});
+  assert.equal(remove.status, 200,
+    `DELETE /rest/remove/:id should return 200, got ${remove.status} with body ${JSON.stringify(remove.payload)}`);
+  assert.deepEqual(remove.payload, fixtures.removeResult);
+  assert.deepEqual(app.stub.requests.map(({method, url}) => ({method, url})), [{method: 'DELETE', url: `/logs/${testCorrelationId}?force=1`}],
+    `remove should call DELETE /logs/:correlationId?force=1, stub saw: ${JSON.stringify(app.stub.requests)}`);
+});

@@ -20,7 +20,7 @@
   "main": "src/index.js",
   "type": "module",
   "engines": {
-    "node": ">=24"
+    "node": ">=26"
   },
   "scripts": {
     "start": "node dist/index.js",
@@ -34,22 +34,19 @@
   },
   "dependencies": {
     "@natlibfi/melinda-commons": "^16.0.0",
-    "@natlibfi/melinda-rest-api-client": "^6.0.3",
-    "@natlibfi/melinda-ui-commons": "^6.0.0",
-    "@natlibfi/passport-melinda-aleph": "^5.0.0",
-    "@natlibfi/passport-melinda-jwt": "^3.0.0",
+    "@natlibfi/melinda-rest-api-client": "^7.0.0-alpha.5",
+    "@natlibfi/melinda-ui-commons": "^8.0.0-alpha.5",
+    "@natlibfi/passport-melinda-aleph": "^6.0.0-alpha.4",
+    "@natlibfi/passport-melinda-jwt": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "express": "^5.3.0",
-    "express-handlebars": "^9.0.2",
+    "express-handlebars": "^9.0.6",
     "http-status": "^2.1.0",
     "passport": "^0.7.0"
   },
   "devDependencies": {
-    "esbuild": "^0.28.1",
-    "eslint": "^10.13.0"
-  },
-  "overrides": {
-    "nodemailer": "10.2.1"
+    "esbuild": "^0.28.2",
+    "eslint": "^10.16.0"
   }
 }
