@@ -1,0 +1,1076 @@
+{
+  "_id": "000000000000000000000001",
+  "logItemType": "MATCH_LOG",
+  "cataloger": "IMP_EXAMPLE",
+  "correlationId": "00000000-0000-4000-8000-000000000001",
+  "blobSequence": 93,
+  "sourceIds": [
+    "(FI-BTJ)1234567",
+    "(example)7654321"
+  ],
+  "title": "Nintendo Switch Sports Resort",
+  "standardIdentifiers": [
+    "0045496314972",
+    "045496314972"
+  ],
+  "incomingRecord": {
+    "_validationOptions": {
+      "subfieldValues": false
+    },
+    "leader": "00000nmm a22003974i 4500",
+    "fields": [
+      {
+        "tag": "005",
+        "value": "20261028044818.2"
+      },
+      {
+        "tag": "007",
+        "value": "cz cza||||||||"
+      },
+      {
+        "tag": "008",
+        "value": "261127s2026    gw     gq  g |      eng|c"
+      },
+      {
+        "tag": "024",
+        "ind1": "3",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "0045496314972"
+          }
+        ]
+      },
+      {
+        "tag": "024",
+        "ind1": "1",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "045496314972"
+          }
+        ]
+      },
+      {
+        "tag": "035",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "(FI-BTJ)1234567"
+          }
+        ]
+      },
+      {
+        "tag": "040",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "FI-BTJ"
+          },
+          {
+            "code": "b",
+            "value": "fin"
+          },
+          {
+            "code": "e",
+            "value": "rda"
+          }
+        ]
+      },
+      {
+        "tag": "041",
+        "ind1": "0",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "eng"
+          },
+          {
+            "code": "a",
+            "value": "ger"
+          },
+          {
+            "code": "a",
+            "value": "fre"
+          },
+          {
+            "code": "a",
+            "value": "dut"
+          },
+          {
+            "code": "a",
+            "value": "spa"
+          },
+          {
+            "code": "a",
+            "value": "por"
+          },
+          {
+            "code": "a",
+            "value": "ita"
+          },
+          {
+            "code": "a",
+            "value": "jpn"
+          },
+          {
+            "code": "a",
+            "value": "kor"
+          },
+          {
+            "code": "a",
+            "value": "chi"
+          },
+          {
+            "code": "j",
+            "value": "rus"
+          },
+          {
+            "code": "j",
+            "value": "pol"
+          },
+          {
+            "code": "j",
+            "value": "tha"
+          }
+        ]
+      },
+      {
+        "tag": "049",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "c",
+            "value": "K7"
+          }
+        ]
+      },
+      {
+        "tag": "084",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "79.816"
+          },
+          {
+            "code": "2",
+            "value": "ykl"
+          }
+        ]
+      },
+      {
+        "tag": "245",
+        "ind1": "0",
+        "ind2": "0",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Nintendo Switch Sports Resort :"
+          },
+          {
+            "code": "b",
+            "value": "Nintendo Switch 2."
+          }
+        ]
+      },
+      {
+        "tag": "264",
+        "ind1": " ",
+        "ind2": "1",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Frankfurt :"
+          },
+          {
+            "code": "b",
+            "value": "Nintendo of Europe,"
+          },
+          {
+            "code": "c",
+            "value": "[2026]"
+          }
+        ]
+      },
+      {
+        "tag": "300",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "1 muistikortti (Nintendo Switch) :"
+          },
+          {
+            "code": "b",
+            "value": "värillinen, ääni ;"
+          },
+          {
+            "code": "c",
+            "value": "3 x 2 x 0,5 cm"
+          },
+          {
+            "code": "f",
+            "value": "kotelo"
+          },
+          {
+            "code": "g",
+            "value": "17 x 11 x 1 cm"
+          }
+        ]
+      },
+      {
+        "tag": "336",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "kaksiulotteinen liikkuva kuva"
+          },
+          {
+            "code": "b",
+            "value": "tdi"
+          },
+          {
+            "code": "2",
+            "value": "rdacontent"
+          }
+        ]
+      },
+      {
+        "tag": "336",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "tietokoneohjelma"
+          },
+          {
+            "code": "b",
+            "value": "cop"
+          },
+          {
+            "code": "2",
+            "value": "rdacontent"
+          }
+        ]
+      },
+      {
+        "tag": "337",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "tietokonekäyttöinen"
+          },
+          {
+            "code": "b",
+            "value": "c"
+          },
+          {
+            "code": "2",
+            "value": "rdamedia"
+          }
+        ]
+      },
+      {
+        "tag": "338",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "muistikortti"
+          },
+          {
+            "code": "b",
+            "value": "ck"
+          },
+          {
+            "code": "2",
+            "value": "rdacarrier"
+          }
+        ]
+      },
+      {
+        "tag": "500",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Pelitilat: tv-tila 1-4 pelaajaa, pöytätila 1-4 pelaaja."
+          }
+        ]
+      },
+      {
+        "tag": "506",
+        "ind1": "1",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Kielletty alle 7-vuotiailta."
+          }
+        ]
+      },
+      {
+        "tag": "508",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Pelin kehittänyt Nintendo."
+          }
+        ]
+      },
+      {
+        "tag": "520",
+        "ind1": "8",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Luo Sportsmate- tai Mii-hahmo ja tutustu Wuhu Island -saaren urheilukeskuksen tarjontaan. Käytä Joy-Con 2 -ohjaimia mailoina, jousina, meloina ja muuna, kun kokeilet seuraavia lajeja: nyrkkeily, pöytätennis, jousiammunta, tennis, lentopallo, keilailu, koripallo, golf, peukalopaini, skeittaus, vesiskootteriajo, potkurikone."
+          }
+        ]
+      },
+      {
+        "tag": "538",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "400 Mt kovalevytilaa."
+          }
+        ]
+      },
+      {
+        "tag": "538",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Nintendo Switch 2 -pelikonsoli."
+          }
+        ]
+      },
+      {
+        "tag": "588",
+        "ind1": "0",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Nimeke kannesta."
+          }
+        ]
+      },
+      {
+        "tag": "655",
+        "ind1": " ",
+        "ind2": "7",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "urheilupelit"
+          },
+          {
+            "code": "2",
+            "value": "slm/fin"
+          },
+          {
+            "code": "0",
+            "value": "http://urn.fi/URN:NBN:fi:au:slm:s336"
+          }
+        ]
+      },
+      {
+        "tag": "655",
+        "ind1": " ",
+        "ind2": "7",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "konsolipelit"
+          },
+          {
+            "code": "2",
+            "value": "slm/fin"
+          },
+          {
+            "code": "0",
+            "value": "http://urn.fi/URN:NBN:fi:au:slm:s492"
+          }
+        ]
+      },
+      {
+        "tag": "710",
+        "ind1": "2",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Nintendo."
+          }
+        ]
+      },
+      {
+        "tag": "753",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Nintendo Switch 2"
+          }
+        ]
+      },
+      {
+        "tag": "884",
+        "subfields": [
+          {
+            "code": "a",
+            "value": "Example to Melinda MARC transformation"
+          },
+          {
+            "code": "g",
+            "value": "20261127"
+          },
+          {
+            "code": "k",
+            "value": "EXAMPLE:0000000000000000000000000000000000000000000000000000000000000000"
+          },
+          {
+            "code": "q",
+            "value": "FI-NL"
+          },
+          {
+            "code": "5",
+            "value": "MELINDA"
+          }
+        ],
+        "ind1": " ",
+        "ind2": " "
+      },
+      {
+        "tag": "SID",
+        "ind1": " ",
+        "ind2": " ",
+        "subfields": [
+          {
+            "code": "c",
+            "value": "1234567"
+          },
+          {
+            "code": "b",
+            "value": "FI-BTJ"
+          }
+        ]
+      },
+      {
+        "tag": "SID",
+        "subfields": [
+          {
+            "code": "c",
+            "value": "7654321"
+          },
+          {
+            "code": "b",
+            "value": "example"
+          }
+        ],
+        "ind1": " ",
+        "ind2": " "
+      }
+    ]
+  },
+  "matchResult": [
+    {
+      "action": false,
+      "preference": false,
+      "message": "field 245 (title) failed",
+      "candidate": {
+        "id": "012345678",
+        "record": {
+          "_validationOptions": {},
+          "leader": "02008cmm a22004214i 4500",
+          "fields": [
+            {
+              "tag": "001",
+              "value": "012345678"
+            },
+            {
+              "tag": "003",
+              "value": "FI-MELINDA"
+            },
+            {
+              "tag": "005",
+              "value": "20261028122727.0"
+            },
+            {
+              "tag": "007",
+              "value": "cz cza||||||||"
+            },
+            {
+              "tag": "008",
+              "value": "261022s2026    gw     gq  g |      eng|c"
+            },
+            {
+              "tag": "024",
+              "ind1": "3",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "045496314972"
+                }
+              ]
+            },
+            {
+              "tag": "035",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "(FI-MELINDA)012345678"
+                }
+              ]
+            },
+            {
+              "tag": "040",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "FI-Xx"
+                },
+                {
+                  "code": "b",
+                  "value": "fin"
+                },
+                {
+                  "code": "e",
+                  "value": "rda"
+                }
+              ]
+            },
+            {
+              "tag": "041",
+              "ind1": "0",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "eng"
+                },
+                {
+                  "code": "a",
+                  "value": "ger"
+                },
+                {
+                  "code": "a",
+                  "value": "fre"
+                },
+                {
+                  "code": "a",
+                  "value": "dut"
+                },
+                {
+                  "code": "a",
+                  "value": "spa"
+                },
+                {
+                  "code": "a",
+                  "value": "por"
+                },
+                {
+                  "code": "a",
+                  "value": "ita"
+                },
+                {
+                  "code": "a",
+                  "value": "jpn"
+                },
+                {
+                  "code": "a",
+                  "value": "kor"
+                },
+                {
+                  "code": "a",
+                  "value": "chi"
+                },
+                {
+                  "code": "j",
+                  "value": "rus"
+                },
+                {
+                  "code": "j",
+                  "value": "pol"
+                },
+                {
+                  "code": "j",
+                  "value": "thai"
+                }
+              ]
+            },
+            {
+              "tag": "049",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "c",
+                  "value": "K7"
+                }
+              ]
+            },
+            {
+              "tag": "084",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "79.816"
+                },
+                {
+                  "code": "2",
+                  "value": "ykl"
+                }
+              ]
+            },
+            {
+              "tag": "245",
+              "ind1": "0",
+              "ind2": "0",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Nintendo Switch sports resert :"
+                },
+                {
+                  "code": "b",
+                  "value": "Nintendo Switch 2."
+                }
+              ]
+            },
+            {
+              "tag": "264",
+              "ind1": " ",
+              "ind2": "1",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Frankfurt :"
+                },
+                {
+                  "code": "b",
+                  "value": "Nintendo of Europe,"
+                },
+                {
+                  "code": "c",
+                  "value": "[2026]"
+                }
+              ]
+            },
+            {
+              "tag": "300",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "1 muistikortti (Nintendo Switch) :"
+                },
+                {
+                  "code": "b",
+                  "value": "värillinen, ääni ;"
+                },
+                {
+                  "code": "c",
+                  "value": "3 x 2 x 0,5 cm"
+                },
+                {
+                  "code": "e",
+                  "value": "+leg strap"
+                },
+                {
+                  "code": "f",
+                  "value": "kotelo"
+                },
+                {
+                  "code": "g",
+                  "value": "17 x 11 x 1 cm"
+                }
+              ]
+            },
+            {
+              "tag": "336",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "kaksiulotteinen liikkuva kuva"
+                },
+                {
+                  "code": "b",
+                  "value": "tdi"
+                },
+                {
+                  "code": "2",
+                  "value": "rdacontent"
+                }
+              ]
+            },
+            {
+              "tag": "336",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "tietokoneohjelma"
+                },
+                {
+                  "code": "b",
+                  "value": "cop"
+                },
+                {
+                  "code": "2",
+                  "value": "rdacontent"
+                }
+              ]
+            },
+            {
+              "tag": "337",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "tietokonekäyttöinen"
+                },
+                {
+                  "code": "b",
+                  "value": "c"
+                },
+                {
+                  "code": "2",
+                  "value": "rdamedia"
+                }
+              ]
+            },
+            {
+              "tag": "338",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "muistikortti"
+                },
+                {
+                  "code": "b",
+                  "value": "ck"
+                },
+                {
+                  "code": "2",
+                  "value": "rdacarrier"
+                }
+              ]
+            },
+            {
+              "tag": "500",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Pelitilat: tv-tila 1-4 pelaajaa, pöytätila 1-4 pelaaja."
+                }
+              ]
+            },
+            {
+              "tag": "506",
+              "ind1": "1",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Kielletty alle 7-vuotiailta."
+                }
+              ]
+            },
+            {
+              "tag": "508",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Pelin kehittänyt Nintendo."
+                }
+              ]
+            },
+            {
+              "tag": "520",
+              "ind1": "8",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Luo Sportsmate- tai Mii-hahmo ja tutustu Wuhu Island -saaren urheilukeskuksen tarjontaan. Käytä Joy-Con 2 -ohjaimia mailoina, jousina, meloina ja muuna, kun kokeilet seuraavia lajeja: nyrkkeily, pöytätennis, jousiammunta, tennis, lentopallo, keilailu, koripallo, golf, peukalopaini, skeittaus, vesiskootteriajo, potkurikone."
+                }
+              ]
+            },
+            {
+              "tag": "588",
+              "ind1": "0",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Nimeke tekstilipukkeesta."
+                }
+              ]
+            },
+            {
+              "tag": "588",
+              "ind1": "0",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Kielimerkinnöt kotelosta."
+                }
+              ]
+            },
+            {
+              "tag": "588",
+              "ind1": "0",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Nimeke kannesta."
+                }
+              ]
+            },
+            {
+              "tag": "655",
+              "ind1": " ",
+              "ind2": "7",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "urheilupelit"
+                },
+                {
+                  "code": "2",
+                  "value": "slm/fin"
+                },
+                {
+                  "code": "0",
+                  "value": "http://urn.fi/URN:NBN:fi:au:slm:s336"
+                }
+              ]
+            },
+            {
+              "tag": "655",
+              "ind1": " ",
+              "ind2": "7",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "konsolipelit"
+                },
+                {
+                  "code": "2",
+                  "value": "slm/fin"
+                },
+                {
+                  "code": "0",
+                  "value": "http://urn.fi/URN:NBN:fi:au:slm:s492"
+                }
+              ]
+            },
+            {
+              "tag": "710",
+              "ind1": "2",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Nintendo."
+                }
+              ]
+            },
+            {
+              "tag": "753",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Nintendo Switch 2"
+                }
+              ]
+            },
+            {
+              "tag": "884",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "Example to Melinda MARC transformation"
+                },
+                {
+                  "code": "g",
+                  "value": "20261022 - 20261028"
+                },
+                {
+                  "code": "k",
+                  "value": "EXAMPLE:1111111111111111111111111111111111111111111111111111111111111111"
+                },
+                {
+                  "code": "q",
+                  "value": "FI-NL"
+                },
+                {
+                  "code": "5",
+                  "value": "MELINDA"
+                }
+              ]
+            },
+            {
+              "tag": "SID",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "c",
+                  "value": "7654321"
+                },
+                {
+                  "code": "b",
+                  "value": "example"
+                }
+              ]
+            },
+            {
+              "tag": "CAT",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "IMP_EXAMPLE"
+                },
+                {
+                  "code": "b",
+                  "value": "30"
+                },
+                {
+                  "code": "c",
+                  "value": "20261022"
+                },
+                {
+                  "code": "l",
+                  "value": "FIN99"
+                },
+                {
+                  "code": "h",
+                  "value": "1656"
+                }
+              ]
+            },
+            {
+              "tag": "CAT",
+              "ind1": " ",
+              "ind2": " ",
+              "subfields": [
+                {
+                  "code": "a",
+                  "value": "IMP_EXAMPLE"
+                },
+                {
+                  "code": "b",
+                  "value": "30"
+                },
+                {
+                  "code": "c",
+                  "value": "20261028"
+                },
+                {
+                  "code": "l",
+                  "value": "FIN99"
+                },
+                {
+                  "code": "h",
+                  "value": "1227"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "probability": 1,
+      "matchSequence": 0,
+      "matcherReports": [
+        {
+          "matcherSequence": 1,
+          "matcherName": "IDS",
+          "matchAmount": 1,
+          "candidateCount": 1,
+          "conversionFailureCount": 0,
+          "matchStatus": {
+            "status": true,
+            "stopReason": "maxMatches"
+          },
+          "matchIds": [
+            "012345678"
+          ]
+        }
+      ]
+    }
+  ],
+  "matcherReports": [
+    {
+      "matcherSequence": 1,
+      "matcherName": "IDS",
+      "matchAmount": 1,
+      "candidateCount": 1,
+      "conversionFailureCount": 0,
+      "matchStatus": {
+        "status": true,
+        "stopReason": "maxMatches"
+      },
+      "matchIds": [
+        "012345678"
+      ]
+    }
+  ],
+  "creationTime": "2026-11-27T20:50:17.485Z",
+  "protected": false
+}

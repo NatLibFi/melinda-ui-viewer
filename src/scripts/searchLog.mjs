@@ -8,6 +8,7 @@ import {idbClearList, idbClearLogs, idbGetLogs, idbSetLogs} from '/scripts/index
 import {setProtectButton} from '/scripts/logActions.mjs';
 import {getMatchLog, getMergeLog} from '/scripts/callRest.mjs';
 import {escapeHtml} from '/scripts/htmlUtils.mjs';
+import {clearMatchCompare, showMatchCompare} from '/scripts/recordCompare.mjs';
 import {oneDayInMs} from '/scripts/searchModal.mjs';
 
 /* Shared imports */
@@ -212,6 +213,7 @@ window.loadLog = (event) => {
 
   if (logType === 'EMPTY_LOG') {
     console.log('Clearing record view');
+    clearMatchCompare();
 
     const downloadButton = document.getElementById('export');
     const infoCol1 = document.querySelector(`#viewer #recordsInfo #panelContent #infoCol1`);
@@ -263,6 +265,7 @@ window.loadLog = (event) => {
       }
 
       addLogInfo(data);
+      clearMatchCompare();
 
       col2.style.display = 'block';
       col3.style.display = 'block';
@@ -431,15 +434,17 @@ window.loadMatch = (event) => {
   idbGetLogs(sequenceSelect).then(data => {
     matchSelectWrap.style.visibility = data.matchResult.length > 1 ? 'visible' : 'hidden';
     setRecordTopInfo('record1', 'Sisääntuleva tietue', false);
-    showRecord(data.incomingRecord, 'record1', {}, 'viewer');
     if (data.matchResult.length === 0) {
+      clearMatchCompare();
+      showRecord(data.incomingRecord, 'record1', {}, 'viewer');
       setRecordTopInfo('record4', 'Vastaava Melinda-tietue', '<ul><li>Ei löytynyt</li></ul>');
       showRecord({}, 'record4', {}, 'viewer');
       return;
     }
     const {record, note} = getMergeCandidateInfo(data.matchResult[event.target.value]);
     setRecordTopInfo('record4', 'Vastaava Melinda-tietue', note);
-    showRecord(record, 'record4', {}, 'viewer');
+    // Match compare mode: the records side by side, fields aligned and differences marked
+    showMatchCompare(data.incomingRecord, record);
   });
 };
 
