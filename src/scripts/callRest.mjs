@@ -3,19 +3,15 @@
 //-----------------------------------------------------------------------------------------
 
 
-/* Shared imports */
-import {doRestCall} from '/shared/scripts/common.js';
-
-
 const RESTurl = `${window.location.protocol}//${window.location.host}`;
 
 export function getMatchLog(id, sequence) {
-  const url = `${RESTurl}/rest/match-log/${id}${sequence ? `?sequence=${sequence}` : ''}`;
+  const url = `${RESTurl}/rest/match-log/${encodeURIComponent(id)}${sequence ? `?sequence=${encodeURIComponent(sequence)}` : ''}`;
   return doRestCall({url: url, method: 'GET', resultAsJson: true});
 }
 
 export function getMergeLog(id, sequence) {
-  const url = `${RESTurl}/rest/merge-log/${id}${sequence ? `?sequence=${sequence}` : ''}`;
+  const url = `${RESTurl}/rest/merge-log/${encodeURIComponent(id)}${sequence ? `?sequence=${encodeURIComponent(sequence)}` : ''}`;
   return doRestCall({url: url, method: 'GET', resultAsJson: true});
 }
 
@@ -25,13 +21,56 @@ export function getCorrelationIdList(expanded, logItemTypes) {
 }
 
 export function protectLog(id, sequence) {
-  const url = `${RESTurl}/rest/protect/${id}${sequence ? `?sequence=${sequence}` : ''}`;
+  const url = `${RESTurl}/rest/protect/${encodeURIComponent(id)}${sequence ? `?sequence=${encodeURIComponent(sequence)}` : ''}`;
   return doRestCall({url: url, method: 'PUT'});
 }
 
 export function removeLog(id, force) {
-  const url = `${RESTurl}/rest/remove/${id}${force ? `?force=${force}` : ''}`;
+  const url = `${RESTurl}/rest/remove/${encodeURIComponent(id)}${force ? `?force=${encodeURIComponent(force)}` : ''}`;
   return doRestCall({url: url, method: 'DELETE'});
+}
+
+//*****************************************************************************
+// REST CALL
+//*****************************************************************************
+//
+// Same contract as doRestCall in melinda-ui-commons (resolves to the JSON
+// body or the response when ok, otherwise to failureResult), except that a
+// 401 from /rest - the melinda session cookie is missing or has expired -
+// sends the user to the login page instead of being reported as a failed
+// search. The current query string (id, logType, sequence) is carried over,
+// so after logging in the user lands back on the same log.
+
+export async function doRestCall({url = undefined, method = undefined, body = undefined, contentType = undefined, resultAsJson = false, failureResult = undefined}) {
+  const headers = {
+    'Accept': 'application/json',
+    ...contentType ? {'Content-Type': contentType} : {}
+  };
+
+  try {
+    const result = await fetch(url, {method, headers, ...body ? {body} : {}});
+
+    if (result.status === 401) {
+      redirectToLogin();
+      // The page is navigating away: never settle, so callers do not show
+      // a failure message in the meantime.
+      return new Promise(() => {});
+    }
+
+    if (result.ok) {
+      return resultAsJson ? result.json() : result;
+    }
+
+    throw new Error(result.status);
+  } catch (error) {
+    console.error('fetch() failed', error);
+    return failureResult;
+  }
+}
+
+function redirectToLogin() {
+  console.warn('Session has expired or is missing, redirecting to login');
+  window.location.assign(`/login${window.location.search}`);
 }
 
 //*****************************************************************************
