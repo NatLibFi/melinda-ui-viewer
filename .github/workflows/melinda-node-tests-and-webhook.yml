@@ -16,9 +16,9 @@ jobs:
 
     steps:
     - name: Checkout the code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -36,10 +36,10 @@ jobs:
 
     steps:
     - name: Checkout the code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: nodejsscan scan
       id: njsscan
-      uses: ajinabraham/njsscan-action@master
+      uses: ajinabraham/njsscan-action@v9
       with:
         args: '.'
 
@@ -49,7 +49,7 @@ jobs:
     container: node:26
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
     - uses: mikaelvesavuori/license-compliance-action@v1
       with:
         # default action list + BlueOak-1.0.0 (@isaacs/* via glob, from express-handlebars 9) — OSI-approved permissive
@@ -65,13 +65,13 @@ jobs:
 
     steps:
     - name: Test webhook
-      uses: joelwmale/webhook-action@master
+      uses: joelwmale/webhook-action@v2
       if: github.ref == 'refs/heads/test'
       with:
         url: ${{ secrets.WEBHOOK_URL_TEST }}
         body: '{"event": "${{ github.event_name }}","uri": "${{ github.repository }}","ref": "${{ github.ref }}","commit": "${{ github.sha }}"}'
     - name: Prod webhook
-      uses: joelwmale/webhook-action@master
+      uses: joelwmale/webhook-action@v2
       if: github.ref == 'refs/heads/main'
       with:
         url: ${{ secrets.WEBHOOK_URL_PROD }}
