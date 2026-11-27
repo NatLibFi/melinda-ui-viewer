@@ -50,8 +50,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v7
-    - uses: mikaelvesavuori/license-compliance-action@v1
+    - uses: mikaelvesavuori/license-compliance-action@v1.0.5
       with:
+        # check direct (depth-1) production dependencies only
+        direct: true
         # default action list + BlueOak-1.0.0 (@isaacs/* via glob, from express-handlebars 9) — OSI-approved permissive
         allow_licenses: 'MIT;ISC;0BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;BlueOak-1.0.0;MIT-0'
         # pause@0.0.1 (pinned by passport) has no license field or LICENSE file; upstream pause 0.1.0 (same API) is MIT
