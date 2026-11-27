@@ -17,6 +17,7 @@ import {fixtures, testCorrelationId} from './helpers/melindaStub.mjs';
 //   T7 protect/remove forward the correlation id and params to the
 //      Melinda API log endpoints
 //   T8 the melinda auth cookie is HttpOnly and SameSite=Lax
+//   T9 login redirects keep only the id/logType/sequence query params
 
 let app;
 const authCookie = makeAuthCookie();
@@ -148,4 +149,29 @@ test('T8: the melinda auth cookie is set HttpOnly and SameSite=Lax', async () =>
   assert.match(setCookie, /^melinda=/u, `expected a melinda cookie, got: ${setCookie}`);
   assert.match(setCookie, /;\s*HttpOnly/iu, `cookie should be HttpOnly, got: ${setCookie}`);
   assert.match(setCookie, /;\s*SameSite=Lax/iu, `cookie should be SameSite=Lax, got: ${setCookie}`);
+});
+
+test('T9: login redirects keep only the allowlisted id/logType/sequence query parameters', async () => {
+  const getLocation = async (pathAndQuery, cookie) => {
+    const response = await fetch(`${app.baseUrl}${pathAndQuery}`, {redirect: 'manual', headers: cookie ? {cookie} : {}});
+    return {status: response.status, location: response.headers.get('location')};
+  };
+  const query = `id=${testCorrelationId}&logType=MATCH_LOG&sequence=2`;
+
+  const toLogin = await getLocation(`/?${query}&next=https://evil.test&id2=x`);
+  assert.equal(toLogin.status, 302);
+  assert.equal(toLogin.location, `/login?${query}`,
+    `unauthenticated / should redirect to /login with only the allowlisted params, got ${toLogin.location}`);
+
+  const backToViewer = await getLocation(`/login?${query}&next=//evil.test`, authCookie);
+  assert.equal(backToViewer.status, 302);
+  assert.equal(backToViewer.location, `/?${query}`,
+    `authenticated /login should redirect back to / with only the allowlisted params, got ${backToViewer.location}`);
+
+  const noQuery = await getLocation('/');
+  assert.equal(noQuery.location, '/login');
+
+  const encoded = await getLocation('/?id=a%26b%3Dc%2F%2Fevil.test');
+  assert.equal(encoded.location, '/login?id=a%26b%3Dc%2F%2Fevil.test',
+    `parameter values should stay encoded, got ${encoded.location}`);
 });
