@@ -5,6 +5,7 @@
 
 /* Local imports */
 import {protectLog, removeLog} from '/scripts/callRest.mjs';
+import {escapeHtml} from '/scripts/htmlUtils.mjs';
 
 /* Shared imports */
 import {disableElement} from '/shared/scripts/elements.js';
@@ -68,7 +69,7 @@ window.protect = function (event = undefined) {
         throw new Error('Response status ok:false');
       }
       doSearchPress();
-      showSnackbar({style: 'success', text: `Sekvenssin ${sequence} turvausta on muutettu. Päivitetään ID <span class="correlation-id-font">${id}</span>`});
+      showSnackbar({style: 'success', text: `Sekvenssin ${escapeHtml(sequence)} turvausta on muutettu. Päivitetään ID <span class="correlation-id-font">${escapeHtml(id)}</span>`});
     })
     .catch(error => {
       showSnackbar({style: 'error', text: 'Valitettavasti tämän ID:n ja sekvenssin turvausta ei pystytty muuttamaan!'});
@@ -112,7 +113,7 @@ window.openRemoveDialog = function (event = undefined) {
     return;
   }
 
-  dialogIdText.innerHTML = ` ${id} `;
+  dialogIdText.textContent = ` ${id} `;
   dialog.showModal();
 };
 
@@ -139,7 +140,7 @@ function remove(id) {
         throw new Error('Response status ok:false');
       }
       clearLogView();
-      showSnackbar({status: 'success', text: `Poistettiin ID <span class="correlation-id-font">${id}</span>`});
+      showSnackbar({status: 'success', text: `Poistettiin ID <span class="correlation-id-font">${escapeHtml(id)}</span>`});
       console.log(`Log ${id} removed`);
     })
     .catch(error => {

@@ -99,8 +99,8 @@ window.initialize = function () {
       checkFile(file);
 
       file
-        ? (fileNameDiv.innerHTML = file.name, fileNameDiv.classList.add('file-selected'), clearFileSelectButton.style.display = 'flex')
-        : (fileNameDiv.innerHTML = 'Ei valittua tiedostoa', fileNameDiv.classList.remove('file-selected'), clearFileSelectButton.style.display = 'none');
+        ? (fileNameDiv.textContent = file.name, fileNameDiv.classList.add('file-selected'), clearFileSelectButton.style.display = 'flex')
+        : (fileNameDiv.textContent = 'Ei valittua tiedostoa', fileNameDiv.classList.remove('file-selected'), clearFileSelectButton.style.display = 'none');
 
     });
 

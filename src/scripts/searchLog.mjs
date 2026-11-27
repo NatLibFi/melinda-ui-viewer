@@ -7,6 +7,7 @@
 import {idbClearList, idbClearLogs, idbGetLogs, idbSetLogs} from '/scripts/indexedDB.mjs';
 import {setProtectButton} from '/scripts/logActions.mjs';
 import {getMatchLog, getMergeLog} from '/scripts/callRest.mjs';
+import {escapeHtml} from '/scripts/htmlUtils.mjs';
 import {oneDayInMs} from '/scripts/searchModal.mjs';
 
 /* Shared imports */
@@ -148,7 +149,10 @@ window.doFetch = function (event = undefined, id = '', sequence = 0, logType = '
 
   function updateInfoTextWithSearchedId() {
     const infoTextDiv = document.getElementById(`lastSearchedInfoText`);
-    infoTextDiv.innerHTML = `Edellinen haku: <span class="correlation-id-font">${id}</span`;
+    const idSpan = document.createElement('span');
+    idSpan.classList.add('correlation-id-font');
+    idSpan.textContent = id;
+    infoTextDiv.replaceChildren('Edellinen haku: ', idSpan);
     infoTextDiv.title = '';
   }
 
@@ -161,7 +165,7 @@ window.doFetch = function (event = undefined, id = '', sequence = 0, logType = '
 
     console.log('An error occurred while fetching the log: probably the correlation id was malformatted.');
 
-    showSnackbar({style: 'error', text: `Ei tuloksia ID:lle '${id}'. ID '${id}'ei ole kelvollinen ID.`, linkButton: button});
+    showSnackbar({style: 'error', text: `Ei tuloksia ID:lle '${escapeHtml(id)}'. ID '${escapeHtml(id)}' ei ole kelvollinen ID.`, linkButton: button});
     highlightElement(idInputField);
     enableElement(clearButton);
     disableElement(protectButton);
@@ -375,29 +379,41 @@ window.loadLog = (event) => {
     const logInfo2 = [
       createInfo('Luetteloija', data.cataloger),
       createInfo('Nimeke', data.title),
-      createInfo('Tunnisteet', createUlHtml(data.standardIdentifiers)),
-      createInfo('Lähde-ID:t', createUlHtml(data.sourceIds)),
-      createInfo('Vastaavuusraportit', createUlHtml(data.matcherReports, formatMatchReport))
+      createInfoHtml('Tunnisteet', createTextList(data.standardIdentifiers)),
+      createInfoHtml('Lähde-ID:t', createTextList(data.sourceIds)),
+      createInfoHtml('Vastaavuusraportit', createTextList(data.matcherReports, formatMatchReport))
     ];
 
-    infoCol1.innerHTML = createUlHtml(logInfo1);
-    infoCol2.innerHTML = createUlHtml(logInfo2);
+    infoCol1.innerHTML = createHtmlList(logInfo1);
+    infoCol2.innerHTML = createHtmlList(logInfo2);
   }
 };
 
+// Info rows and lists for the log info panels.
+// createInfo and createTextList escape their (log data) values;
+// createInfoHtml and createHtmlList take HTML built by the functions here.
+
 function createInfo(infoName, infoData) {
-  return `<b>${infoName}:</b> ${infoData ? infoData : '<i>Tieto puuttuu lokista</i>'}`;
+  return createInfoHtml(infoName, infoData ? escapeHtml(infoData) : '');
 }
 
-function createUlHtml(liHtmlArray, itemFormatter = undefined) {
-  if (liHtmlArray === undefined) {
+function createInfoHtml(infoName, infoHtml) {
+  return `<b>${infoName}:</b> ${infoHtml ? infoHtml : '<i>Tieto puuttuu lokista</i>'}`;
+}
+
+function createTextList(values, itemFormatter = undefined) {
+  if (values === undefined) {
     return '';
   }
 
+  return createHtmlList(values.map(value => escapeHtml(itemFormatter ? itemFormatter(value) : value)));
+}
+
+function createHtmlList(liHtmlArray) {
   let listContent = '';
 
-  liHtmlArray.forEach(arrayItem => {
-    listContent += createLiHtml(itemFormatter ? itemFormatter(arrayItem) : arrayItem);
+  liHtmlArray.forEach(liHtml => {
+    listContent += createLiHtml(liHtml);
   });
 
   return `<ul>${listContent}</ul>`;
@@ -436,13 +452,15 @@ function getMergeCandidateInfo(data) {
   const preference = data?.preference !== false ? data.preference.name : data?.message;
   const matcherReports = data?.matcherReports;
 
-  const note = createUlHtml([
+  const note = createHtmlList([
     createInfo('Melinda-ID', id),
     createInfo('Käypäisyys', `${probability * 100}%`),
     createInfo('Yhdistämistapa', action),
     createInfo('Yhdistäessä pohjana', preferenceRecord === undefined ? 'Ei yhdistetä' : preferenceRecord === 'A' ? 'Sisääntuleva' : 'Melinda-tietue'),
     createInfo('Peruste', preference),
-    createInfo('Vastaavuusraportit', matcherReports.length > 0 ? createUlHtml(matcherReports, formatMatchReport) : 'Ei raportteja')
+    matcherReports.length > 0
+      ? createInfoHtml('Vastaavuusraportit', createTextList(matcherReports, formatMatchReport))
+      : createInfo('Vastaavuusraportit', 'Ei raportteja')
   ]);
 
   return {
@@ -518,7 +536,7 @@ export function setDataToIndexedDB(logs, sequence, id) {
     idbSetLogs('0', {incomingRecord: {}, databaseRecord: {}, mergedRecord: {}});
     select.value = 0;
     disableElement(protectButton);
-    showSnackbar({style: 'alert', text: `Ei hakutuloksia ID:lle ${id}`});
+    showSnackbar({style: 'alert', text: `Ei hakutuloksia ID:lle ${escapeHtml(id)}`});
     console.log('This correlation id was not found in API/database');
     stopProcess();
     return select.dispatchEvent(new Event('change'));
@@ -540,7 +558,7 @@ export function setDataToIndexedDB(logs, sequence, id) {
   const sequenceInputField = document.getElementById('sequenceInput');
 
   if (sequenceInputField.value !== '' && !refactoredKeys.includes(sequenceInputField.value)) {
-    showSnackbar({style: 'alert', text: `Ei hakutuloksia sekvenssille '${sequenceInputField.value}', näytetään sekvenssi ${select.value}`});
+    showSnackbar({style: 'alert', text: `Ei hakutuloksia sekvenssille '${escapeHtml(sequenceInputField.value)}', näytetään sekvenssi ${escapeHtml(select.value)}`});
     console.log('The correlation id exists, but the sequence that was inputted for search does not exist.');
     highlightElement(select);
   }
