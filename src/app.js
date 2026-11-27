@@ -9,7 +9,7 @@ import cors from 'cors';
 import {AlephStrategy} from '@natlibfi/passport-melinda-aleph';
 import {MelindaJwtStrategy, verify, cookieExtractor} from '@natlibfi/passport-melinda-jwt';
 
-import {createExpressLogger, createLogger} from '@natlibfi/melinda-backend-commons';
+import {createExpressLogger, createLogger} from '@natlibfi/melinda-commons';
 import {createStatusRouter, createMainViewRouter, createLogServiceRouter, createAuthRouter} from './routes/index.js';
 
 
@@ -145,7 +145,7 @@ export async function startApp(configOptions) {
     app.use('/logout', passport.authenticate('jwt', {session: false}), (req, res) => {
       res.redirect('/auth/logout');
     });
-    app.use('/rest', createLogServiceRouter(melindaApiOptions));
+    app.use('/rest', createLogServiceRouter(melindaApiOptions, passport));
     app.use('/auth', createAuthRouter(passport, jwtOptions));
 
     //---------------------------------------------------//
@@ -173,13 +173,11 @@ export async function startApp(configOptions) {
     //Middleware function to handle 404 pages
 
     function handlePageNotFound(req, res, next) {
-      const {user} = req.oidc;
-
       logger.warn(`Error: it seems that this page is not found!`);
       logger.verbose(`Request method: ${req.method} | Path: ${req.path} | Query parameters: ${JSON.stringify(req.query)}`);
 
       const renderedView = 'pageNotFound';
-      const localVariable = {title: 'Sivua ei löydy', username: user.name};
+      const localVariable = {title: 'Sivua ei löydy', username: req.user?.name ?? ''};
 
       res.status(404);
       res.render(renderedView, localVariable);

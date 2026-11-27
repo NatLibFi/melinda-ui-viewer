@@ -1,7 +1,7 @@
-import {createLogger} from '@natlibfi/melinda-backend-commons';
-import {Error} from '@natlibfi/melinda-commons';
+import {createLogger, Error} from '@natlibfi/melinda-commons';
 import httpStatus from 'http-status';
 
+const uuidV4Pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/iu;
 
 //*****************************************************************************
 // Middleware for checking named route parameters
@@ -53,10 +53,15 @@ export function handleFailedRouteParams(req, res, next) {
   //-----------------------------------------------------------------------------
   // Checks viewerapp specific route parameters
   //  - possible viewer route parameters are:
+  //      - id: log correlation id, a UUID v4
   //  - all parameters are not present in every request
 
   function checkviewerRouteParams(routeParams) {
-    return [];
+    const {id} = routeParams;
+    if (id === undefined) {
+      return [];
+    }
+    return [{name: 'id', value: uuidV4Pattern.test(id)}];
   }
 
 }

@@ -11,20 +11,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x, 24.x]
+        node-version: [26.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: Checkout the code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
       env:
         NPM_CONFIG_IGNORE_SCRIPTS: true
-    - run: npm audit --package-lock-only --production --audit-level=moderate
+    - run: npm audit --package-lock-only --omit=dev --audit-level=moderate
     - run: npm i
     - run: npm test
     - run: npm run build --if-present
@@ -32,43 +32,48 @@ jobs:
   njsscan:
     name: Njsscan-check
     runs-on: ubuntu-latest
-    container: node:22
+    container: node:26
 
     steps:
     - name: Checkout the code
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
     - name: nodejsscan scan
       id: njsscan
-      uses: ajinabraham/njsscan-action@master
+      uses: ajinabraham/njsscan-action@v9
       with:
         args: '.'
 
   license-scan:
     name: License compliance check
     runs-on: ubuntu-latest
-    container: node:22
+    container: node:26
 
     steps:
-    - uses: actions/checkout@v6
-    - uses: mikaelvesavuori/license-compliance-action@v1
+    - uses: actions/checkout@v7
+    - uses: mikaelvesavuori/license-compliance-action@v1.0.5
       with:
-        exclude_pattern: /^@natlibfi/
+        # check direct (depth-1) production dependencies only
+        direct: true
+        # default action list + BlueOak-1.0.0 (@isaacs/* via glob, from express-handlebars 9) — OSI-approved permissive
+        allow_licenses: 'MIT;ISC;0BSD;BSD-2-Clause;BSD-3-Clause;Apache-2.0;BlueOak-1.0.0;MIT-0'
+        # pause@0.0.1 (pinned by passport) has no license field or LICENSE file; upstream pause 0.1.0 (same API) is MIT
+        exclude_pattern: /^@natlibfi/;pause
 
   openshift-webhook:
     name: OpenShift webhook for image builder
     needs: [build-node-versions, njsscan]
     runs-on: ubuntu-latest
-    container: node:22
+    container: node:26
 
     steps:
     - name: Test webhook
-      uses: joelwmale/webhook-action@master
+      uses: joelwmale/webhook-action@v2
       if: github.ref == 'refs/heads/test'
       with:
         url: ${{ secrets.WEBHOOK_URL_TEST }}
         body: '{"event": "${{ github.event_name }}","uri": "${{ github.repository }}","ref": "${{ github.ref }}","commit": "${{ github.sha }}"}'
     - name: Prod webhook
-      uses: joelwmale/webhook-action@master
+      uses: joelwmale/webhook-action@v2
       if: github.ref == 'refs/heads/main'
       with:
         url: ${{ secrets.WEBHOOK_URL_PROD }}

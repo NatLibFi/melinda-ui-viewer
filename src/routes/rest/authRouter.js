@@ -1,8 +1,7 @@
 import httpStatus from 'http-status';
-import {generateAuthorizationHeader} from '@natlibfi/melinda-commons';
+import {createLogger, generateAuthorizationHeader} from '@natlibfi/melinda-commons';
 import {generateJwtToken} from '@natlibfi/passport-melinda-jwt';
 import {Router} from 'express';
-import {createLogger} from '@natlibfi/melinda-backend-commons';
 import {sanitizeString} from '../../services/authService.js';
 import {handleError} from '../routerUtils/routerUtils.js';
 
@@ -24,7 +23,7 @@ export function createAuthRouter(passport, jwtOptions) {
   function getBaseToken(req, res) {
     const {username, password} = req.body;
     if (!username || !password) {
-      res.status(500).json({error: 'username or password malformed or missing'});
+      res.status(400).json({error: 'username or password malformed or missing'});
       return;
     }
     try {
@@ -41,7 +40,7 @@ export function createAuthRouter(passport, jwtOptions) {
     logger.info('auth/ - verifyBasic');
     const {displayName, id, authorization, emails} = req.user;
     const token = generateJwtToken({displayName, id, authorization, emails}, jwtOptions);
-    res.cookie(cookieNames.userToken, token, {httpOnly: true, SameSite: 'None', secure: process.env.NODE_ENV === 'production', maxAge: getCookieMaxAge()});
+    res.cookie(cookieNames.userToken, token, getCookieOptions());
     res.status(httpStatus.OK).json(req.user);
   }
 
@@ -49,7 +48,7 @@ export function createAuthRouter(passport, jwtOptions) {
     logger.info('auth/ - verifyJwt');
     const {displayName, id, authorization, emails} = req.user;
     const token = generateJwtToken({displayName, id, authorization, emails}, jwtOptions);
-    res.cookie(cookieNames.userToken, token, {httpOnly: true, SameSite: 'None', secure: process.env.NODE_ENV === 'production', maxAge: getCookieMaxAge()});
+    res.cookie(cookieNames.userToken, token, getCookieOptions());
     res.status(httpStatus.OK).json(req.user);
   }
 
@@ -62,13 +61,20 @@ export function createAuthRouter(passport, jwtOptions) {
     res.redirect('/');
   }
 
+  // sameSite 'lax' is what browsers already applied: the previous
+  // `SameSite: 'None'` key was never read by Express (the option is
+  // `sameSite`), and the viewer only uses the cookie same-site.
+  function getCookieOptions() {
+    return {httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', maxAge: getCookieMaxAge()};
+  }
+
   function getCookieMaxAge() {
     //set required data to cookie with proper options
     const isInProduction = process.env.NODE_ENV === 'production';
     //cookie age in hours
     const cookieAgeDevelopment = 12;
     const cookieAgeProduction = 9;
-    const cookieAge = getHoursInMilliSeconds(isInProduction ? cookieAgeDevelopment : cookieAgeProduction);
+    const cookieAge = getHoursInMilliSeconds(isInProduction ? cookieAgeProduction : cookieAgeDevelopment);
 
     return cookieAge;
 

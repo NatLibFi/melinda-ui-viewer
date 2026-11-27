@@ -5,6 +5,7 @@
 /* Local imports */
 import {idbClearList, idbGetList, idbSetList} from '/scripts/indexedDB.mjs';
 import {getCorrelationIdList} from '/scripts/callRest.mjs';
+import {escapeHtml} from '/scripts/htmlUtils.mjs';
 
 /* Shared imports */
 import {highlightElement} from '/shared/scripts/elements.js';
@@ -485,7 +486,7 @@ function createListItem(logItem) {
 
     // logItem's correlationId is not unique, so the id for listItem is created using two logItem attributes
     listItem.id = `${correlationId}:${logItemType}`;
-    listItem.querySelector(`.list-item-id`).innerHTML = correlationId;
+    listItem.querySelector(`.list-item-id`).textContent = correlationId;
 
     const logTypeText = `Lokityyppi: ${styleBold(logItemType)}`;
     const catalogerText = `Luetteloija: ${styleBold(cataloger)}`;
@@ -537,7 +538,7 @@ function createListItem(logItem) {
     }
 
     function styleBold(text) {
-      return `<span style="font-weight: bold">${text}</span>`;
+      return `<span style="font-weight: bold">${escapeHtml(text)}</span>`;
     }
   }
 }
@@ -567,15 +568,18 @@ function highlightMatches() {
     function stylePatternMatches() {
       const listItemIdDivs = document.querySelectorAll(`#correlationIdListModal #correlationIdList .list-item-id`);
 
-      const styledString = `<span style="background-color:var(--color-green-60)">${searchString}</span>`;
-      const regExp = new RegExp(`${searchString}`, 'g');
+      // The list is filtered with a literal includes(), so match literally
+      // here too (not as a RegExp), and escape both the id and the input.
+      const styledString = `<span style="background-color:var(--color-green-60)">${escapeHtml(searchString)}</span>`;
 
-      listItemIdDivs.forEach(listItemId => listItemId.innerHTML = listItemId.innerHTML.replace(regExp, styledString));
+      listItemIdDivs.forEach(listItemId => {
+        listItemId.innerHTML = listItemId.textContent.split(searchString).map(escapeHtml).join(styledString);
+      });
     }
   }
 
   function highlightLastSearchedListItem() {
-    const lastSearchedCorrelationId = document.querySelector(`#lastSearchedInfoText span`)?.innerHTML;
+    const lastSearchedCorrelationId = document.querySelector(`#lastSearchedInfoText span`)?.textContent;
     const lastSearchedLogType = document.getElementById(`logType`).value;
     const id = `${lastSearchedCorrelationId}:${lastSearchedLogType}`;
     const lastSearchedListItem = document.getElementById(id);

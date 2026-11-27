@@ -1,4 +1,4 @@
-import {createLogger} from '@natlibfi/melinda-backend-commons';
+import {createLogger} from '@natlibfi/melinda-commons';
 import {createMelindaApiLogClient} from '@natlibfi/melinda-rest-api-client';
 
 //****************************************************************************//
@@ -45,7 +45,7 @@ export function createLogsOperator(melindaApiOptions) {
   async function protectLog(correlationId, params) {
     logger.info('LOGS SERVICE: protectLog');
 
-    const result = await restApiLogClient.protectLog(correlationId, params);
+    const result = await restApiLogClient.protectLog({correlationId, ...params});
     return result;
   }
 
@@ -53,7 +53,7 @@ export function createLogsOperator(melindaApiOptions) {
   async function removeLog(correlationId, params) {
     logger.info('LOGS SERVICE: removeLog');
 
-    const result = await restApiLogClient.removeLog(correlationId, params);
+    const result = await restApiLogClient.removeLog({correlationId, ...params});
     return result;
   }
 

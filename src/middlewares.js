@@ -1,4 +1,31 @@
-// import {createLogger} from '@natlibfi/melinda-backend-commons';
+// Query parameters the viewer page reads from its own URL
+// (src/scripts/viewer.mjs parseUrlParameters); only these are
+// carried over the login redirects.
+const preservedQueryParams = ['id', 'logType', 'sequence'];
+
+/**
+* Build the query string carried over a login redirect
+*
+* Rebuilt from the allowlisted parameters only, re-encoded, so the redirect
+* target is always the fixed redirect path plus known parameters: nothing
+* else from the client-sent URL can reach the Location header.
+*
+* @param {Request} req - express request
+* @returns {string} - '' or '?id=...&logType=...&sequence=...'
+*/
+export function getPreservedQueryString(req) {
+  const params = new URLSearchParams();
+
+  preservedQueryParams.forEach(name => {
+    const value = req.query[name];
+    if (typeof value === 'string' && value !== '') {
+      params.set(name, value);
+    }
+  });
+
+  const queryString = params.toString();
+  return queryString === '' ? '' : `?${queryString}`;
+}
 
 /**
 * Create auth handler
@@ -53,12 +80,11 @@ export function createAuthHandler(passport) {
   function authHandler(params = {}) {
     const {failureRedirects, successRedirects, allowUnauthorized = false, preserveURL = false} = params;
     return (req, res, next) => {
-      const URL = preserveURL ? `${req.originalUrl.replace(req.path, '')}` : '';
-      console.log(URL);
+      const preservedQuery = preserveURL ? getPreservedQueryString(req) : '';
       passport.authenticate('jwt', {session: false}, (err, user) => {
         if (err || !user) {
           if (failureRedirects) {
-            return res.redirect(`${failureRedirects}${URL}`);
+            return res.redirect(`${failureRedirects}${preservedQuery}`);
           }
           if (allowUnauthorized) {
             return next();
@@ -70,7 +96,7 @@ export function createAuthHandler(passport) {
         req.user = user;
 
         if (successRedirects) {
-          return res.redirect(`${successRedirects}${URL}`);
+          return res.redirect(`${successRedirects}${preservedQuery}`);
         }
 
         return next();
