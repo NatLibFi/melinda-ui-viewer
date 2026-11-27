@@ -14,11 +14,6 @@ export function getMatchLog(id, sequence) {
   return doRestCall({url: url, method: 'GET', resultAsJson: true});
 }
 
-export function getMatchValidationLog(id, sequence) {
-  const url = `${RESTurl}/rest/match-validation-log/${id}${sequence ? `?sequence=${sequence}` : ''}`;
-  return doRestCall({url: url, method: 'GET', resultAsJson: true});
-}
-
 export function getMergeLog(id, sequence) {
   const url = `${RESTurl}/rest/merge-log/${id}${sequence ? `?sequence=${sequence}` : ''}`;
   return doRestCall({url: url, method: 'GET', resultAsJson: true});

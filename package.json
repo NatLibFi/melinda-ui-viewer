@@ -26,7 +26,7 @@
     "start": "node dist/index.js",
     "prepare": "npm run build",
     "build": "node build.js",
-    "dev": "DEBUG=@natlibfi/* nodemon",
+    "dev": "DEBUG=@natlibfi/* node --watch src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "test:base": "node --test --test-force-exit --experimental-test-coverage --test-reporter=spec --test-coverage-include=src/** './tests/*.test.mjs' './tests/**/*.test.mjs'",

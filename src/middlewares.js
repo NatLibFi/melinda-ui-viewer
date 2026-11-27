@@ -57,7 +57,6 @@ export function createAuthHandler(passport) {
       const URL = preserveURL && req.originalUrl.startsWith(req.path)
         ? req.originalUrl.slice(req.path.length)
         : '';
-      console.log(URL);
       passport.authenticate('jwt', {session: false}, (err, user) => {
         if (err || !user) {
           if (failureRedirects) {
